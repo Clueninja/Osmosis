@@ -205,8 +205,8 @@ class CircularMembrane{
 		let vY = other.velY; let vX = other.velX;
 		// create normal vector from the centre of the circle to the particle
 		// then reflect along this vector 
-		let nX=pX+this.x;
-		let nY=pY+this.y;
+		let nX=pX-this.x;
+		let nY=pY-this.y;
 		
 		// r = d - 2* (d dot n) n
 		// where n is the normal vector to the surface normalised and d is the vector of incidence
@@ -230,12 +230,17 @@ class CircularMembrane{
 		let pX=other.posX; let pY=other.posY;
 		let vY = other.velY; let vX = other.velX;
 		// if particle is inside membrane edge
-		if(pow(pX-this.x,2) + pow(pY-this.y,2) < pow(this.rad,2) && pow(pX-vX-this.x,2) + pow(pY-vY-this.y,2) > pow(this.rad,2)){
+		let inside = pow(pX-this.x,2) + pow(pY-this.y,2) < pow(this.rad,2);
+		let outside = pow(pX-this.x,2) + pow(pY-this.y,2) > pow(this.rad,2);
+		let inside_after = pow(pX+vX-this.x,2) + pow(pY+vY-this.y,2) < pow(this.rad,2);
+		let outside_after = pow(pX+vX-this.x,2) + pow(pY+vY-this.y,2) > pow(this.rad,2);
+
+		if((inside && outside_after) ||(outside && inside_after)){
 		// if the partcle is water
 			if (other.type == 'w'){
 				// then there is a probability of passing through the membrane
 				// if the particle is reflected
-				if (random(0,100)!=1){
+				if (int(random(0,100))!=1){
 					this.reflect(other);
 				}
 			
