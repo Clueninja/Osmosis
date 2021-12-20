@@ -240,7 +240,7 @@ class CircularMembrane{
 			if (other.type == 'w'){
 				// then there is a probability of passing through the membrane
 				// if the particle is reflected
-				if (int(random(0,100))!=1){
+				if (int(random(0,10))!=1){
 					this.reflect(other);
 				}
 			
