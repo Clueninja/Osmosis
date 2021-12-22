@@ -117,10 +117,11 @@ class Macro extends Model{
 				this.particles.push(p);
 			}
 		}
-		if (this.draw_membrane && mouseIsPressed){
+		if (this.draw_membrane && this.control.getMouseReleased()){
 			let rad = this.control.getVal('draw_membrane_radius');
 			this.membranes.push(new CircularMembrane(mouseX, mouseY, rad, 5));
 			this.draw_membrane = false;
+			
 		}
 	// imitate collitions
 		if (this.particles.length>0){
@@ -138,6 +139,9 @@ class Macro extends Model{
 			}
 			p.update();
 		}
+		// update controller to reset whether the mouse is relesed
+		// I don't care if the mouse was released the frame before, or ever released
+		this.control.update();
 
 	}
 	reset(){
@@ -151,6 +155,7 @@ class Macro extends Model{
 		}
 	}	
 }
+
 // functions to be used when pressing drawing
 function macro_add_particles(){
 	model.draw_particles = !model.draw_particles;

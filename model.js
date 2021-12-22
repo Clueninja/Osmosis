@@ -37,6 +37,11 @@ class controller{
 		// lists of slider and button objects
 		this.sliders=[];
 		this.buttons=[];
+
+		// add mouse input
+		this.mousePressed = false;
+		this.mouseHeld = false;
+		this.mouseReleased = false;
 	}
 	draw(){
 		// atm only needs to update the sliders to display the text
@@ -74,10 +79,18 @@ class controller{
 		}
 		return null;
 	}
+	getMouseReleased(){
+		let temp = this.mouseReleased;
+		this.mouseReleased = false;
+		return temp;
+	}
 	// functions to create a new Slider and button to display onto screen
 	addButton(id,string,func, x,y){this.buttons.push(new button(id,string,func,x,y));}
 	
 	addSlider(id,string, min,max,def, x,y){this.sliders.push(new slider(id,string,min,max,def,x,y));}
+
+	// update only here for resetting variables that only apply for one frame
+	update(){this.mouseReleased = false;}
 	
 	clear(){
 		for (const s of this.sliders){
@@ -89,7 +102,6 @@ class controller{
 		this.sliders=[];
 		this.buttons=[];
 	}
-	
 
 }
 
@@ -101,10 +113,17 @@ class Model{
 	// virtual draw
 	draw(){}
 	// virtual update
-	update(){}
+	update(){
+		this.control.update();
+	}
 	// virtual reset
 	reset(){}
 	
 	//remove buttons and sliders
 	clear(){this.control.clear();}
+}
+
+
+function mouseReleased(event){
+	model.control.mouseReleased = true;
 }
