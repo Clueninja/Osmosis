@@ -117,7 +117,7 @@ class Macro extends Model{
 				this.particles.push(p);
 			}
 		}
-		if (this.draw_membrane && this.control.getMouseReleased()){
+		if (this.draw_membrane && this.control.mouseReleased){
 			let rad = this.control.getVal('draw_membrane_radius');
 			this.membranes.push(new CircularMembrane(mouseX, mouseY, rad, 5));
 			this.draw_membrane = false;
