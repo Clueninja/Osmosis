@@ -41,19 +41,21 @@ class Micro extends Model{
 		this.control.addButton('reset_button', 'Reset',reset, 200,200);
 		
 		
-		this.control.addSlider('water_right_slider','Water Number Right', 0,40,0,width-200,height-150);
-		this.control.addSlider('salt_right_slider','Salt Number Right', 0,40,0,width-200,height-100);
+		this.control.addSlider('water_right_slider','Water Number Right', 0,300,0,width-200,height-150);
+		this.control.addSlider('salt_right_slider','Salt Number Right', 0,300,0,width-200,height-100);
 	
 		
-		this.control.addSlider('water_left_slider','Water Number Left', 0,40,0,100,height-150);
-		this.control.addSlider('salt_left_slider','Salt Number Left', 0,40,0,100,height-100);
+		this.control.addSlider('water_left_slider','Water Number Left', 0,300,0,100,height-150);
+		this.control.addSlider('salt_left_slider','Salt Number Left', 0,300,0,100,height-100);
 		
 		
 	}
 	
 	
 	updateSliders(){
+		// edit micro model to utilise particles
 		let num = this.control.getDiff('salt_left_slider');
+		// always check if the slider exists before trying to use the value
 		if (num !=null)
 			Particle.addParticles('s',num,'l', this.particles);
 		
@@ -102,6 +104,7 @@ class Micro extends Model{
 				}
 			}
 		}
+		// draw number of particles on either side
 		fill('blue');
 		textSize(40);
 		text(left_water, width/4,50);
@@ -120,6 +123,7 @@ class Micro extends Model{
 		for (const a of this.particles){
 			for (const b of this.particles){
 				if (a != b){
+					// its a constant variable yet I'm editing it in the collide method, this shouldn't be possible
 					a.collide(b);
 				}
 			}

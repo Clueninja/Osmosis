@@ -39,6 +39,7 @@ class Macro extends Model{
 		let scale = pow(2,this.control.getVal('scale_slider'));
 		
 		let img = createImage(round(width/scale),round(height/scale));
+		// load pixels from created image
 		img.loadPixels();
 		//Set Image to White
 		for (let x = 0; x < img.width; x++) {
@@ -61,7 +62,7 @@ class Macro extends Model{
 			let temp = index%4;
 			// find black pixel for that index of pixel
 			index = index-temp;
-			
+			// change different rgb value for type of particle
 			if(p.type=='w'){
 				img.pixels[index+0]-= 255/pow(scale,2);
 				img.pixels[index+1]-= 255/pow(scale,2);
@@ -70,6 +71,7 @@ class Macro extends Model{
 				img.pixels[index+1]-= 255/pow(scale,2);
 				img.pixels[index+2]-= 255/pow(scale,2);
 			}
+			// default red colour
 			else{
 				img.pixels[index+1]-= 255/pow(scale,2);
 				img.pixels[index+2]-= 255/pow(scale,2);
@@ -77,6 +79,7 @@ class Macro extends Model{
 			// test
 			//circle(p.posX, p.posY, 1);
 		}
+		// update the pixels to the image I just loaded
 		img.updatePixels();
 		image(img, 0,0,width,height);
 		for (const m of this.membranes){
@@ -134,11 +137,9 @@ class Macro extends Model{
 		// Particle.addParticles('w', 200000,'l',this.particles);
 		// Particle.addParticles('s', 20000,'r',this.particles);
 		
-	}
-	
-	
-	
+	}	
 }
+// functions to be used when pressing drawing functions
 function macro_add_particles(){
 	model.drawing = !model.drawing;
 }

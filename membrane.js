@@ -33,7 +33,7 @@ class Rect{
 		let W = this.w+other.mass()*2;
 		let H = this.h+other.mass()*2;
 		
-		if ( pX > X && pX < X + W && pY > Y && pY < Y + H ){
+		if ( pX+vX > X && pX+vX < X + W && pY+vY > Y && pY+vY < Y + H ){
 			
 			
 		
@@ -91,67 +91,67 @@ class Rect{
 			if ( Y < pY - l * vY && (Y+H) > pY - l * vY && abs(l)<1){
 
 				// if approaching from outside the rectangle
-				if (l>0)
-				{
+				//if (l>0)
+				//{
 					// reflect along the y axis
 					other.posX = X;
 					other.velX *=-1;
-				}
+				//}
 				// if approaching from inside the rectangle 
-				else 
-				{
+				//else 
+				//{
 					// move the particle to the other side of the rectangle with a reflected velocity 
 					
-					other.posX = X+W;
-				}
+				//	other.posX = X+W;
+				//}
 			}
 			// check right side
 			l = ((pX-(X+W))/vX);
 			if ( Y < pY - l*vY && (Y+H) > pY - l*vY && abs(l)<1){
 				
-				if (l>0)
-				{
+				//if (l>0)
+				//{
 					other.posX = X+W;
 					other.velX *=-1;
-				}
-				else 
-				{
+				//}
+				//else 
+				//{
 					// move the particle to the other side of the rectangle with a reflected velocity 
 					
-					other.posX = X;
-				}
+				//	other.posX = X;
+				//}
 			}
 			// check top
 			l = ((pY-Y)/vY);
 			if (X < pX - l*vX && (X+W) > pX - l * vX && abs(l)<1) {
 				
-				if (l>0)
-				{
+				//if (l>0)
+				//{
 					other.posY = Y;
 					other.velY *=-1;
-				}
-				else 
-				{
+				//}
+				//else 
+				//{
 					// move the particle to the other side of the rectangle with a reflected velocity 
 					
-					other.posX = Y+H;
-				}
+				//	other.posX = Y+H;
+				//}
 			}
 			// check bottom
 			l = ((pY-(Y+H))/vY);
 			if( X < pX - l*vX && (X + W) > pX - l*vX && abs(l) < 1){				
 				
-				if (l>0)
-				{
+				//if (l>0)
+				//{
 					other.posY = Y+H;
 					other.velY *=-1;
-				}
-				else 
-				{
+				//}
+				//else 
+				//{
 					// move the particle to the other side of the rectangle with a reflected velocity 
 					
-					other.posX = Y;
-				}
+				//	other.posX = Y;
+				//}
 					
 
 
@@ -232,6 +232,7 @@ class CircularMembrane{
 		// if particle is inside membrane edge
 		let inside = pow(pX-this.x,2) + pow(pY-this.y,2) < pow(this.rad,2);
 		let outside = pow(pX-this.x,2) + pow(pY-this.y,2) > pow(this.rad,2);
+
 		let inside_after = pow(pX+vX-this.x,2) + pow(pY+vY-this.y,2) < pow(this.rad,2);
 		let outside_after = pow(pX+vX-this.x,2) + pow(pY+vY-this.y,2) > pow(this.rad,2);
 
