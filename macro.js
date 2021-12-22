@@ -40,7 +40,7 @@ class Macro extends Model{
 
 		// this is not working properly
 		this.control.addButton('add_membrane', 'Add Membrane', macro_add_membrane, 500, 70);
-		this.control.addSlider('draw_membrane_radius', 'Membrane Radius',200,500,200,500,50);
+		this.control.addSlider('draw_membrane_radius', 'Membrane Radius',100,300,150,500,50);
 
 	}
 	
