@@ -1,6 +1,6 @@
 
 class Macro extends Model{
-	constructor(){
+	constructor(type){
 		// call Model.constructor()
 		super();
 		// A macro model has a list of particles and a list of Membranes, as well as an image that gets updated every frame
@@ -9,11 +9,16 @@ class Macro extends Model{
 		this.drawing = false;
 		this.is_water = true;
 
-		// Add Water to one side of the model
-		//Particle.addParticles('w', 200000,'l',this.particles);
+		switch (type){
+			case 'split':
+				// Add Water to one side of the model
+				Particle.addParticles('w', 200000,'l',this.particles);
 
-		// and salt particles on the other side
-		//Particle.addParticles('s', 20000,'r',this.particles);
+				// and salt particles on the other side
+				Particle.addParticles('s', 20000,'r',this.particles);
+				break;
+		}
+		
 
 		// add a large membrane
 		this.membranes.push(new CircularMembrane(3*width/4, height/2, 200, 5));
@@ -139,12 +144,16 @@ class Macro extends Model{
 		
 	}	
 }
-// functions to be used when pressing drawing functions
+// functions to be used when pressing drawing
 function macro_add_particles(){
 	model.drawing = !model.drawing;
 }
 function macro_toggle_type(){
 	model.is_water= !model.is_water;
+}
+function load_macro_split(){
+	model.clear();
+	model = new Macro('split');
 }
 
 function load_macro(){

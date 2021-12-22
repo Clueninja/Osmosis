@@ -13,8 +13,7 @@ class Menu extends Model{
 		this.control.addButton('ad_micro_model',"Advanced Micro Model",load_advmicro, 100,180);
 		
 		this.control.addButton('macro_model',"Choose Macro Model",load_macro,100,220);
-		
-		
+		this.control.addButton('macro_model_split',"Split Macro Model",load_macro_split,100,240);
 	}
 	
 }

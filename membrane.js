@@ -90,72 +90,31 @@ class Rect{
 			let l = ((pX-X)/vX);
 			
 			if ( Y < pY - l * vY && (Y+H) > pY - l * vY && abs(l)<1){
-
-				// if approaching from outside the rectangle
-				//if (l>0)
-				//{
-					// reflect along the y axis
-					other.posX = X;
-					other.velX *=-1;
-				//}
-				// if approaching from inside the rectangle 
-				//else 
-				//{
-					// move the particle to the other side of the rectangle with a reflected velocity 
-					
-				//	other.posX = X+W;
-				//}
+				//other.posX = X;
+				other.velX *=-1;
 			}
 			// check right side
 			l = ((pX-(X+W))/vX);
 			if ( Y < pY - l*vY && (Y+H) > pY - l*vY && abs(l)<1){
-				
-				//if (l>0)
-				//{
-					other.posX = X+W;
-					other.velX *=-1;
-				//}
-				//else 
-				//{
-					// move the particle to the other side of the rectangle with a reflected velocity 
-					
-				//	other.posX = X;
-				//}
+				//other.posX = X+W;
+				other.velX *=-1;
 			}
 			// check top
 			l = ((pY-Y)/vY);
 			if (X < pX - l*vX && (X+W) > pX - l * vX && abs(l)<1) {
-				
-				//if (l>0)
-				//{
-					other.posY = Y;
-					other.velY *=-1;
-				//}
-				//else 
-				//{
-					// move the particle to the other side of the rectangle with a reflected velocity 
-					
-				//	other.posX = Y+H;
-				//}
+			
+				//other.posY = Y;
+				other.velY *=-1;
+			
 			}
 			// check bottom
 			l = ((pY-(Y+H))/vY);
 			if( X < pX - l*vX && (X + W) > pX - l*vX && abs(l) < 1){				
 				
-				//if (l>0)
-				//{
-					other.posY = Y+H;
-					other.velY *=-1;
-				//}
-				//else 
-				//{
-					// move the particle to the other side of the rectangle with a reflected velocity 
-					
-				//	other.posX = Y;
-				//}
-					
-
-
+				
+				//other.posY = Y+H;
+				other.velY *=-1;
+		
 			}
 			
 			
@@ -231,13 +190,11 @@ class CircularMembrane{
 		let pX=other.posX; let pY=other.posY;
 		let vY = other.velY; let vX = other.velX;
 		// if particle is inside membrane edge
-		let inside = pow(pX-this.x,2) + pow(pY-this.y,2) < pow(this.rad,2);
-		let outside = pow(pX-this.x,2) + pow(pY-this.y,2) > pow(this.rad,2);
+		let is_inside = pow(pX-this.x,2) + pow(pY-this.y,2) < pow(this.rad,2);
 
-		let inside_after = pow(pX+vX-this.x,2) + pow(pY+vY-this.y,2) < pow(this.rad,2);
-		let outside_after = pow(pX+vX-this.x,2) + pow(pY+vY-this.y,2) > pow(this.rad,2);
+		let is_inside_next_frame = pow(pX+vX-this.x,2) + pow(pY+vY-this.y,2) < pow(this.rad,2);
 
-		if((inside && outside_after) ||(outside && inside_after)){
+		if((is_inside && !is_inside_next_frame) ||(!is_inside && is_inside_next_frame)){
 		// if the partcle is water
 			if (other.type == 'w'){
 				// then there is a probability of passing through the membrane
