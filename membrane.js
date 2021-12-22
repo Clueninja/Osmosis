@@ -32,7 +32,8 @@ class Rect{
 		let Y= this.y-other.mass();
 		let W = this.w+other.mass()*2;
 		let H = this.h+other.mass()*2;
-		
+
+		// check if the particle is colliding next frame
 		if ( pX+vX > X && pX+vX < X + W && pY+vY > Y && pY+vY < Y + H ){
 			
 			

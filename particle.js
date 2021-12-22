@@ -122,7 +122,7 @@ class Particle{
 	
 		let dis_sqrd = pow(this.posX-other.posX,2)+pow(this.posY-other.posY,2);
 		
-
+		// if next frame, the particles are colliding
 		if ( pow(this.posX+this.velX-other.posX-other.velX,2)+pow(this.posY+this.velX-other.posY-other.velY,2) < pow(this.mass()+other.mass(),2)){
 			
 			let mag_vel = sqrt(pow(this.velX,2)+pow(this.velY,2));
@@ -141,19 +141,19 @@ class Particle{
 			other.velY = other.velY - other_mass_dd * (other.posY-this.posY);
 
 			// I dont need to calculate new positions if the particles aren't intersecting
-
+			// If the particles are intersecting (they spawned colliding), then move the particles away from each other
 			if ( pow(this.posX-other.posX,2)+pow(this.posY-other.posY,2) < pow(this.mass()+other.mass(),2)){
-			
-			// sort out position stuff
-				
-				let total_distance_to_be_moved = ((this.mass()+other.mass())-sqrt(dis_sqrd))/2;
+				// sort out position stuff
+				// find distance one particle has to be moved
+				let distance_to_be_moved = ((this.mass()+other.mass())-sqrt(dis_sqrd))/2;
 				let thisposX = this.posX; let thisposY = this.posY; let otherposX = other.posX; let otherposY = other.posY;
 				
-				this.posX = total_distance_to_be_moved * (thisposX-otherposX)/sqrt(dis_sqrd) +thisposX;
-				this.posY = total_distance_to_be_moved * (thisposY-otherposY)/sqrt(dis_sqrd)+thisposY;
+				// do stuff I figured out using maths
+				this.posX = distance_to_be_moved * (thisposX-otherposX)/sqrt(dis_sqrd) +thisposX;
+				this.posY = distance_to_be_moved * (thisposY-otherposY)/sqrt(dis_sqrd)+thisposY;
 				
-				other.posX = total_distance_to_be_moved * (otherposX-thisposX)/sqrt(dis_sqrd) +otherposX;
-				other.posY = total_distance_to_be_moved * (otherposY-thisposY)/sqrt(dis_sqrd)+otherposY;
+				other.posX = distance_to_be_moved * (otherposX-thisposX)/sqrt(dis_sqrd) +otherposX;
+				other.posY = distance_to_be_moved * (otherposY-thisposY)/sqrt(dis_sqrd)+otherposY;
 			}
 			
 			//}
