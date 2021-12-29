@@ -49,7 +49,7 @@ class Rect{
 					|						  |
 					|						  |
 			  		|						  |
-			  __vX__|______	# (pX,pY)		  |
+			  __vX__|______	# (pX+vX,pY+vY)   |
 			  |		|	   /|				  |
 			  |		|	  /	|				  |
 			  |		|  __/	|				  |
@@ -57,13 +57,13 @@ class Rect{
 			  | 	|  /	|			      |
 			  | 	| /		|				  |
 			  | 	|/		|				  |
-  1:X = pX - l* vX  #_______|				  |
+			  |		#_______|				  |
 			  |    /|	l*vX				  |
 			  | __/_|_________________________|
-			  |  #	2: Y = pY - l * vY 		(X + W, Y + H)
+			  |  #						 		(X + W, Y + H)
 			  | /
 			  |/ 
-			  #	(preX, preY) or (pX-vX, pY-vY)
+			  #	(pX, pY)
       
       
       
@@ -82,7 +82,9 @@ class Rect{
 	  
 	  if it is then 1 is true
 	  
-	  
+	no more need to edit positions as the particle is being checked before it is intersecting
+
+
 	  
 			
 			*/
@@ -90,29 +92,21 @@ class Rect{
 			let l = ((pX-X)/vX);
 			
 			if ( Y < pY - l * vY && (Y+H) > pY - l * vY && abs(l)<1){
-				//other.posX = X;
 				other.velX *=-1;
 			}
 			// check right side
 			l = ((pX-(X+W))/vX);
 			if ( Y < pY - l*vY && (Y+H) > pY - l*vY && abs(l)<1){
-				//other.posX = X+W;
 				other.velX *=-1;
 			}
 			// check top
 			l = ((pY-Y)/vY);
 			if (X < pX - l*vX && (X+W) > pX - l * vX && abs(l)<1) {
-			
-				//other.posY = Y;
 				other.velY *=-1;
-			
 			}
 			// check bottom
 			l = ((pY-(Y+H))/vY);
 			if( X < pX - l*vX && (X + W) > pX - l*vX && abs(l) < 1){				
-				
-				
-				//other.posY = Y+H;
 				other.velY *=-1;
 		
 			}
@@ -122,7 +116,9 @@ class Rect{
 
 class Membrane{
 	constructor(num, gap, rect_width){
+		// a membrane contains a list of rectangles that the particles can collide with
 		this.rects = [];
+		// calculate the position and height of each rectangle
 		let height_rect = (height-(num-1)*gap)/num;
 		if (height_rect>1){
 			let tlx=(width/2)-(rect_width/2);
@@ -135,6 +131,7 @@ class Membrane{
 		}
 	}
 	draw(){
+		// draw individual rectangles
 		fill('purple');
 		for (const r of this.rects){
 			r.draw();
@@ -177,8 +174,6 @@ class CircularMembrane{
 		other.velX = vX - 2 * (nX*vX + vY*nY) * nX;
 		other.velY = vY - 2 * (nX*vX + vY*nY) * nY;
 		
-		//other.posX = this.x - this.rad * nX;
-		//other.posY = this.y - this.rad * nY;
 
 	}
 	
