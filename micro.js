@@ -120,22 +120,20 @@ class Micro extends Model{
 		this.updateSliders();
 		// perform collisions between each particle
 		// Big O Complexity of n^2
-		for (const a of this.particles){
-			for (const b of this.particles){
-				if (a != b){
-					// its a constant variable yet I'm editing it in the collide method, this shouldn't be possible
-					a.collide(b);
+		if (!this.paused){
+			for (const a of this.particles){
+				for (const b of this.particles){
+					if (a != b){
+						// its a constant variable yet I'm editing it in the collide method, this shouldn't be possible
+						a.collide(b);
+					}
 				}
+				// check collisions with membrane 
+				this.membrane.collide(a);
+				// update particle's position
+				a.update();
 			}
-			// check collisions with membrane 
-			this.membrane.collide(a);
-			// update particle's position
-			a.update();
-
 		}
-		
-
-		
 	}
 	// reset the model
 	reset(){

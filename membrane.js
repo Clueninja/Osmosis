@@ -116,10 +116,6 @@ class Rect{
 				other.velY *=-1;
 		
 			}
-			
-			
-			
-
 		}
 	}
 }

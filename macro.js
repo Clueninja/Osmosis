@@ -88,6 +88,7 @@ class Macro extends Model{
 			m.draw();
 		}
 		this.control.draw();
+		// draw text for keyboard input prompts
 	}
 	
 	update(){
@@ -117,32 +118,33 @@ class Macro extends Model{
 				}
 			}
 			if ( key == 'm'){
+				// ideally I only want to call this on a single frame rather than continiously
+				// however for this I would ideally make several pages for the website ratehr than load a different model
+				// This means I would have to re-do most of the website
 				let rad = this.control.getVal('draw_membrane_radius');
 				this.membranes.push(new CircularMembrane(mouseX, mouseY, rad, 5));
 				this.draw_membrane = false;
 			}
 		}
-		
-	// imitate collitions
-		if (this.particles.length>0){
-			let num = int(random(0,this.particles.length/200));
-			for (let i=0; i<num;i++){
-				const randIndex = int(random(0, this.particles.length));
+		// allow creating particles but not moving particles
+		if (!this.paused){
+		// imitate collitions
+			if (this.particles.length>0){
+				let num = int(random(0,this.particles.length/200));
+				for (let i=0; i<num;i++){
+					const randIndex = int(random(0, this.particles.length));
 
-				this.particles[randIndex].setRandVel(random(1,2));
+					this.particles[randIndex].setRandVel(random(1,2));
+				}
+			}
+		// update every particle
+			for (const p of this.particles){
+				for (const m of this.membranes){
+					m.collide(p);
+				}
+				p.update();
 			}
 		}
-	// update every particle
-		for (const p of this.particles){
-			for (const m of this.membranes){
-				m.collide(p);
-			}
-			p.update();
-		}
-		// update controller to reset whether the mouse is relesed
-		// I don't care if the mouse was released the frame before, or ever released
-		this.control.update();
-
 	}
 	reset(){
 		let len = this.particles.length;

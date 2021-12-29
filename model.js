@@ -38,10 +38,6 @@ class controller{
 		this.sliders=[];
 		this.buttons=[];
 
-		// add mouse input
-		this.mousePressed = false;
-		this.mouseHeld = false;
-		this.mouseReleased = false;
 	}
 	draw(){
 		// atm only needs to update the sliders to display the text
@@ -85,7 +81,6 @@ class controller{
 	addSlider(id,string, min,max,def, x,y){this.sliders.push(new slider(id,string,min,max,def,x,y));}
 
 	// update only here for resetting variables that only apply for one frame
-	update(){this.mouseReleased = false;}
 	
 	clear(){
 		for (const s of this.sliders){
@@ -104,21 +99,24 @@ class controller{
 class Model{
 	constructor(){
 		this.control = new controller();
+		this.paused = false;
 	}
 	// virtual draw
 	draw(){}
 	// virtual update
-	update(){
-		this.control.update();
-	}
+	update(){}
 	// virtual reset
 	reset(){}
+
+	// virtual pause
 	
 	//remove buttons and sliders
 	clear(){this.control.clear();}
 }
 
-
-function mouseReleased(event){
-	model.control.mouseReleased = true;
+function keyPressed(){
+	if (key == 'p'){
+		model.paused = !model.paused;
+	}
 }
+
