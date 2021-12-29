@@ -125,8 +125,6 @@ class Macro extends Model{
 			}
 			if ( key == 'm'){
 				// ideally I only want to call this on a single frame rather than continiously
-				// however for this I would ideally make several pages for the website ratehr than load a different model
-				// This means I would have to re-do most of the website
 				let rad = this.control.getVal('draw_membrane_radius');
 				this.membranes.push(new CircularMembrane(mouseX, mouseY, rad, 5));
 				this.draw_membrane = false;
