@@ -6,9 +6,6 @@ class Macro extends Model{
 		// A macro model has a list of particles and a list of Membranes, as well as an image that gets updated every frame
 		this.particles = [];
 		this.membranes=[];
-		this.draw_particles = false;
-		this.draw_membrane = false;
-		this.is_water = true;
 
 		switch (type){
 			case 'split':
@@ -35,11 +32,6 @@ class Macro extends Model{
 
 		this.control.addSlider('drawing_radius', 'Drawing Slider',20,50,30,300,50);
 
-		this.control.addButton('toggle_type', ' Toggle Type', macro_toggle_type, 300, 100);
-		this.control.addButton('add_particles', 'Add Particles', macro_add_particles ,300,70 );
-
-		// this is not working properly
-		this.control.addButton('add_membrane', 'Add Membrane', macro_add_membrane, 500, 70);
 		this.control.addSlider('draw_membrane_radius', 'Membrane Radius',100,300,150,500,50);
 
 	}
@@ -99,30 +91,38 @@ class Macro extends Model{
 	}
 	
 	update(){
-		if (this.draw_particles && mouseIsPressed){
-			// get currently used particles
-			let rad = this.control.getVal('drawing_radius');
-			let num = pow(rad, 2);
-			
-			for (let i=0; i<num; i++){
-				let p;
-				if (this.is_water){
-					p = new Water(mouseX + random(-rad, rad), mouseY+ random(-rad, rad));
-				}
-				else{
-					p = new Salt(mouseX + random(-rad, rad), mouseY+ random(-rad, rad));
-				}
+		if (keyIsPressed){
+			if (key == 'w'){
+				// get currently used particles
+				let rad = this.control.getVal('drawing_radius');
+				let num = pow(rad, 2);
 				
-				p.setRandVel(2);
-				this.particles.push(p);
+				for (let i=0; i<num; i++){
+					let p;
+					p = new Water(mouseX + random(-rad, rad), mouseY+ random(-rad, rad));
+					p.setRandVel(1);
+					this.particles.push(p);
+				}
+			}
+			if (key == 's'){
+				// get currently used particles
+				let rad = this.control.getVal('drawing_radius');
+				let num = pow(rad, 2);
+				for (let i=0; i<num; i++){
+					let p;
+					p = new Salt(mouseX + random(-rad, rad), mouseY+ random(-rad, rad));
+
+					p.setRandVel(1);
+					this.particles.push(p);
+				}
+			}
+			if ( key == 'm'){
+				let rad = this.control.getVal('draw_membrane_radius');
+				this.membranes.push(new CircularMembrane(mouseX, mouseY, rad, 5));
+				this.draw_membrane = false;
 			}
 		}
-		if (this.draw_membrane && this.control.mouseReleased){
-			let rad = this.control.getVal('draw_membrane_radius');
-			this.membranes.push(new CircularMembrane(mouseX, mouseY, rad, 5));
-			this.draw_membrane = false;
-			
-		}
+		
 	// imitate collitions
 		if (this.particles.length>0){
 			let num = int(random(0,this.particles.length/200));
@@ -157,17 +157,6 @@ class Macro extends Model{
 }
 
 // functions to be used when pressing drawing
-function macro_add_particles(){
-	model.draw_particles = !model.draw_particles;
-	model.draw_membrane = false;
-}
-function macro_add_membrane(){
-	model.draw_membrane = !model.draw_particles;
-	model.draw_particles = false;
-}
-function macro_toggle_type(){
-	model.is_water= !model.is_water;
-}
 function load_macro_split(){
 	model.clear();
 	model = new Macro('split');

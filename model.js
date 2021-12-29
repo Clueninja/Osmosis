@@ -79,11 +79,6 @@ class controller{
 		}
 		return null;
 	}
-	getMouseReleased(){
-		let temp = this.mouseReleased;
-		this.mouseReleased = false;
-		return temp;
-	}
 	// functions to create a new Slider and button to display onto screen
 	addButton(id,string,func, x,y){this.buttons.push(new button(id,string,func,x,y));}
 	
