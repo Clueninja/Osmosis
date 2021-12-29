@@ -89,6 +89,12 @@ class Macro extends Model{
 		}
 		this.control.draw();
 		// draw text for keyboard input prompts
+		fill(0);
+		textSize(20);
+		text('Press "P" to pause the model', 300, 400);
+		text('Press "M" to draw a membrane', 300, 450);
+		text('Press "W" to draw water particles at mouse cursor', 300, 500);
+		text('Press "S" to draw salt particles at mouse cursor', 300, 550);
 	}
 	
 	update(){

@@ -1,4 +1,4 @@
-// Objec that is a type of model since it contains gui elements
+// Object that is a type of model since it contains gui elements
 
 class Menu extends Model{
 	constructor(){
@@ -11,9 +11,15 @@ class Menu extends Model{
 		this.control.addButton('hypotonic',"Load Hypotonic Solution",load_hypo, 100,140);
 		this.control.addButton('hypertonic',"Load Hypertonic Solution",load_hyper, 100,160);
 		this.control.addButton('ad_micro_model',"Advanced Micro Model",load_advmicro, 100,180);
+
 		
 		this.control.addButton('macro_model',"Choose Macro Model",load_macro,100,220);
 		this.control.addButton('macro_model_split',"Split Macro Model",load_macro_split,100,240);
+	}
+	draw(){
+		fill(0);
+		textSize(30);
+		text('Press "P" to pause the model', 300, 100);
 	}
 	
 }

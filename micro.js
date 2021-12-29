@@ -158,6 +158,10 @@ class Micro extends Model{
 		
 	// draw text for particle count
 		this.drawText();
+
+		fill(0);
+		textSize(20);
+		text('Press "P" to pause the model', 300, 100);
 		
 	}
 	
