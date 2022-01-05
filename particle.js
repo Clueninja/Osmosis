@@ -9,11 +9,10 @@ class Particle{
 		this.posY=posY;
 		this.velX=0;
 		this.velY=0;
-		this._mass = 10;
 		this.type='p';
 	}
 	// to be overwritten by inherited particles
-	mass(){ return this._mass;}
+	mass(){ return 10;}
 	
 	// setter function for velocity
 	setVel(x,y){
@@ -156,8 +155,6 @@ class Particle{
 				other.posY = distance_to_be_moved * (otherposY-thisposY)/sqrt(dis_sqrd)+otherposY;
 			}
 			
-			//}
-			
 			
 			
 		}
@@ -168,8 +165,6 @@ class Particle{
 // statically defined mass makes sense since all water particles have the same size/mass
 // the main difference is different mass variables and colour/draw methods
 class Water extends Particle{
-	// static Water.sMass
-	// .type = 'w'
 	static sMass=5;
 	constructor(posX,posY){super(posX,posY);this.type='w';}
 	mass(){return Water.sMass;}
@@ -177,8 +172,6 @@ class Water extends Particle{
 	draw(){fill('blue'); super.draw();}
 }
 class Salt extends Particle{
-	// static Salt.sMass
-	// .type = 's'
 	static sMass=30;
 	constructor(posX,posY){super(posX,posY);this.type='s';}
 	mass(){return Salt.sMass;}

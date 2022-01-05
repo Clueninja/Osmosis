@@ -107,8 +107,6 @@ class Model{
 	update(){}
 	// virtual reset
 	reset(){}
-
-	// virtual pause
 	
 	//remove buttons and sliders
 	clear(){this.control.clear();}

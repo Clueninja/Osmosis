@@ -193,7 +193,6 @@ class CircularMembrane{
 				if (int(random(0,10))!=1){
 					this.reflect(other);
 				}
-			
 			}
 			else if (other.type == 's'){
 				// always reflect salt particles
