@@ -42,11 +42,11 @@ class Micro extends Model{
 		
 		
 		this.control.addSlider('water_right_slider','Water Number Right', 0,300,0,width-200,height-150);
-		this.control.addSlider('salt_right_slider','Salt Number Right', 0,300,0,width-200,height-100);
+		this.control.addSlider('salt_right_slider','Salt Number Right', 0,50,0,width-200,height-100);
 	
 		
 		this.control.addSlider('water_left_slider','Water Number Left', 0,300,0,100,height-150);
-		this.control.addSlider('salt_left_slider','Salt Number Left', 0,300,0,100,height-100);
+		this.control.addSlider('salt_left_slider','Salt Number Left', 0,50,0,100,height-100);
 		
 		
 	}
