@@ -6,6 +6,8 @@ class Macro extends Model{
 		// A macro model has a list of particles and a list of Membranes, as well as an image that gets updated every frame
 		this.particles = [];
 		this.membranes=[];
+		
+		Particle.drawText=false;
 
 		switch (type){
 			case 'split':
@@ -24,15 +26,15 @@ class Macro extends Model{
 		this.membranes.push(new CircularMembrane(width/4, height/4, 100, 2));
 		// add sliders and buttons for the user to interact with
 		// go back to the menu
-		this.control.addButton('menu_button',"Menu",load_menu, 100,200);
+		this.control.addButton('menu_button',"Menu",load_menu, 350,height-230);
 		// reset the model-> remove all particles
-		this.control.addButton('reset_button',"Reset", reset, 100,100);
+		this.control.addButton('reset_button',"Reset", reset, 350,height-190);
 		// add a scale slider to edit the visuals/ make program run faster
-		this.control.addSlider('scale_slider', 'Scale Slider',0,4,2,100,50);
+		this.control.addSlider('scale_slider', 'Scale Slider',0,4,2,50,height-70);
 
-		this.control.addSlider('drawing_radius', 'Drawing Slider',20,50,30,300,50);
+		this.control.addSlider('drawing_radius', 'Drawing Slider',20,50,30,210,height-70);
 
-		this.control.addSlider('draw_membrane_radius', 'Membrane Radius',100,300,150,500,50);
+		this.control.addSlider('draw_membrane_radius', 'Membrane Radius',100,300,150,370,height-70);
 
 	}
 	
@@ -91,10 +93,11 @@ class Macro extends Model{
 		// draw text for keyboard input prompts
 		fill(0);
 		textSize(20);
-		text('Press "P" to pause the model', 300, 400);
-		text('Press "M" to draw a membrane', 300, 450);
-		text('Hold "W" to draw water particles at mouse cursor', 300, 500);
-		text('Hold "S" to draw salt particles at mouse cursor', 300, 550);
+		
+		text('Press "M" to draw a membrane', 50, height-220);
+		text('Press "P" to pause the model', 50, height-180);
+		text('Hold "S" to draw salt particles at mouse cursor', 50, height-140);
+		text('Hold "W" to draw water particles at mouse cursor', 50, height -100);
 	}
 	
 	update(){

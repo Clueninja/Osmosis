@@ -3,6 +3,7 @@
 // It is only used as a building block to make Water and Salt Particles
 // No Instance of a particle should occur
 class Particle{
+    static drawText = false;
 	constructor(posX, posY){
 		// every particle has position and velocity as well as a type and mass
 		this.posX=posX;
@@ -89,7 +90,15 @@ class Particle{
 	}
 	
 	
-	draw(){circle(this.posX, this.posY, 2*this.mass());}
+	draw(){
+	    circle(this.posX, this.posY, 2*this.mass());
+	    if (Particle.drawText){
+	        fill(0);
+		    textAlign(LEFT);
+		    textSize(20);
+		    text(round(pow(pow(this.velX,2)+pow(this.velY,2), 1/2), 2), this.posX, this.posY);
+	    }
+	}
 	
 	update(){
 		// checks bounds then moves particle

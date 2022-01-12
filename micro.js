@@ -6,6 +6,7 @@ class Micro extends Model{
 		// a micro model contains a list of particles (Water or Salt) and a membrane that has some dimensions
 		this.particles = [];
 		this.membrane = new Membrane(10,55,10);
+		Particle.drawText = false;
 		// starting initial conditions
 		switch (type){
 			case 'isotonic':
@@ -32,13 +33,15 @@ class Micro extends Model{
 				this.control.addSlider('membrane_width_slider','Membrane Width', 10,100,30,width-200,50);
 				this.control.addSlider('membrane_num_slider','Number Of Rects', 2,20,10,width-200,80);
 				this.control.addSlider('membrane_gap_slider','Gap Between Rects', 1,100,55,width-200,110);
+				
+				Particle.drawText = true;
 				break;
 				
 		}
 		// set control gui items like sliders and buttons to interact with
 		
-		this.control.addButton('menu_button', 'Menu',load_menu, 100,200);
-		this.control.addButton('reset_button', 'Reset',reset, 200,200);
+		this.control.addButton('menu_button', 'Menu',load_menu, 300,height-150);
+		this.control.addButton('reset_button', 'Reset',reset, 300,height-100);
 		
 		
 		this.control.addSlider('water_right_slider','Water Number Right', 0,300,0,width-200,height-150);
@@ -160,8 +163,9 @@ class Micro extends Model{
 		this.drawText();
 
 		fill(0);
+		textAlign(LEFT);
 		textSize(20);
-		text('Press "P" to pause the model', 300, 100);
+		text('Press "P" to pause the model', 100, height-200);
 		
 	}
 	

@@ -1,4 +1,9 @@
 
+// Another way to do this project without this kind of management would be to create different pages with its own program to run.
+// So menu.html contains html buttons that redirect you to the micro.html webpage. An issue with this is that it would be more difficult to pass in arguements
+// to set the layout of the micro model.
+
+
 // object that stores the id and p5.slider of a slider
 // this is useful since a list of p5 sliders cannot distinguish between each of them
 // hence I would have to define each slider as a variable in the model which would be a pain to manage
@@ -43,7 +48,6 @@ class controller{
 		// atm only needs to update the sliders to display the text
 		
 		fill('black');
-		textAlign(CENTER);
 		textSize(12);
 		for (const s of this.sliders){
 			text(s.string,s.posX,s.posY-8,120);

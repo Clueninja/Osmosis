@@ -7,6 +7,7 @@ let model; // type Model
 
 // I try to make the main file as clean as possible, so if I wanted to create a new model it would not be difficult.
 function setup() {
+    textAlign(LEFT);
 	createCanvas(windowWidth, windowHeight);
 	//background(200);
 	//frameRate(30);

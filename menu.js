@@ -4,7 +4,7 @@ class Menu extends Model{
 	constructor(){
 		super();
 		
-		// Add the buttons so te user can control which model to be loaded
+		// Add the buttons so the user can control which model to be loaded
 
 		this.control.addButton('micro_model',"Micro Model",load_micro, 100,100);
 		this.control.addButton('isotonic',"Load Isotonic Solution",load_iso, 100,120);
@@ -17,9 +17,10 @@ class Menu extends Model{
 		this.control.addButton('macro_model_split',"Split Macro Model",load_macro_split,100,240);
 	}
 	draw(){
-		fill(0);
-		textSize(30);
-		text('Press "P" to pause the model', 300, 100);
+		//fill(0);
+		//textAlign(LEFT)
+		//textSize(30);
+		//text('Press "P" to pause the model', 300, 200);
 	}
 	
 }
