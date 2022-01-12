@@ -91,24 +91,32 @@ class Rect{
 			// check left side
 			let l = ((pX-X)/vX);
 			
-			if ( Y < pY - l * vY && (Y+H) > pY - l * vY && abs(l)<1){
+			if ( Y < pY - l * vY && (Y+H) > pY - l * vY && abs(l) < 1){
 				other.velX *=-1;
 			}
 			// check right side
 			l = ((pX-(X+W))/vX);
-			if ( Y < pY - l*vY && (Y+H) > pY - l*vY && abs(l)<1){
+			if ( Y < pY - l*vY && (Y+H) > pY - l*vY && abs(l) < 1){
 				other.velX *=-1;
 			}
 			// check top
 			l = ((pY-Y)/vY);
-			if (X < pX - l*vX && (X+W) > pX - l * vX && abs(l)<1) {
+			if (X < pX - l*vX && (X+W) > pX - l * vX && abs(l) < 1) {
 				other.velY *=-1;
 			}
 			// check bottom
 			l = ((pY-(Y+H))/vY);
 			if( X < pX - l*vX && (X + W) > pX - l*vX && abs(l) < 1){				
 				other.velY *=-1;
-		
+			}
+			
+			if ( pX > X && pX < X + W && pY > Y && pY < Y + H ){
+			    if (vX>0){
+			        this.posX = X;
+			    }
+			    else{
+			        this.posX = X+W;
+			    }
 			}
 		}
 	}
