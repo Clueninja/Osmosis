@@ -16,12 +16,6 @@ class Menu extends Model{
 		this.control.addButton('macro_model',"Choose Macro Model",load_macro,100,220);
 		this.control.addButton('macro_model_split',"Split Macro Model",load_macro_split,100,240);
 	}
-	draw(){
-		//fill(0);
-		//textAlign(LEFT)
-		//textSize(30);
-		//text('Press "P" to pause the model', 300, 200);
-	}
 	
 }
 
