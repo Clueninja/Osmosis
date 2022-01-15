@@ -28,7 +28,7 @@ class Micro extends Model
 				
 			case 'advanced':
 				// if the advanced model is loaded
-				this.control.addSlider('water_mass_slider','Water Mass', 10,40,5,width/2-200,height-100);
+				this.control.addSlider('water_mass_slider','Water Mass', 5,40,5,width/2-200,height-100);
 				this.control.addSlider('salt_mass_slider','Salt Mass', 10,40,30,width/2+200,height-100);
 			
 				this.control.addButton('reset_membrane_button', 'Reset Membrane',reset_membrane, width-200,130);
