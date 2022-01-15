@@ -1,5 +1,7 @@
-class Micro extends Model{
-	constructor(type){
+class Micro extends Model
+{
+	constructor(type)
+	{
 		// run Model.constructor()
 		super();
 		
@@ -8,7 +10,8 @@ class Micro extends Model{
 		this.membrane = new Membrane(10,55,10);
 		Particle.drawText = false;
 		// starting initial conditions
-		switch (type){
+		switch (type)
+		{
 			case 'isotonic':
 				// particles spawned on left							particles spawned on right
 				Particle.addParticles('w', 150,'l',this.particles);		Particle.addParticles('w', 150,'r',this.particles);
@@ -55,7 +58,8 @@ class Micro extends Model{
 	}
 	
 	
-	updateSliders(){
+	updateSliders()
+	{
 		// edit micro model to utilise particles
 		let num = this.control.getDiff('salt_left_slider');
 		// always check if the slider exists before trying to use the value
@@ -86,22 +90,28 @@ class Micro extends Model{
 	}
 	
 	// draws the particle count on the screen
-	drawText(){
+	drawText()
+	{
 		// function that needs improvement
 		// Big O complexity of n, which is fine
 		let left_water =0;
 		let left_salt =0;
 		let right_water =0;
 		let right_salt=0;
-		for (const p of this.particles){
-			if (p.posX<width/2){
-				switch (p.type){
+		for (const p of this.particles)
+		{
+			if (p.posX<width/2)
+			{
+				switch (p.type)
+				{
 					case 'w': left_water++;break;
 					case 's': left_salt++;break;
 				}
 			}
-			else{
-				switch (p.type){
+			else
+			{
+				switch (p.type)
+				{
 					case 'w': right_water++;break;
 					case 's': right_salt++;break;
 				}
@@ -118,15 +128,20 @@ class Micro extends Model{
 	}
 	
 	
-	update(){
+	update()
+	{
 		// update mass of particles and add particles
 		this.updateSliders();
 		// perform collisions between each particle
 		// Big O Complexity of n^2
-		if (!this.paused){
-			for (const a of this.particles){
-				for (const b of this.particles){
-					if (a != b){
+		if (!this.paused)
+		{
+			for (const a of this.particles)
+			{
+				for (const b of this.particles)
+				{
+					if (a != b)
+					{
 						// its a constant variable yet I'm editing it in the collide method, this shouldn't be possible
 						a.collide(b);
 					}
@@ -139,7 +154,8 @@ class Micro extends Model{
 		}
 	}
 	// reset the model
-	reset(){
+	reset()
+	{
 		// remove all particles
 		let len = this.particles.length;
 		for (let i=0; i<len;i++){
@@ -148,7 +164,8 @@ class Micro extends Model{
 		
 	}
 	
-	draw(){
+	draw()
+	{
 	// draw each particle
 		for (const p of this.particles){
 			p.draw();
@@ -182,8 +199,10 @@ function reset_membrane()
 }
 
 // depreciated for Particles.addParticles()
-function micro_slider(value){
-	for (let i=0; i<value;i++){
+function micro_slider(value)
+{
+	for (let i=0; i<value;i++)
+	{
 		let p = new Particle(random(0,width), random(0,height));
 		p.setRandVel(micro_water_speed/10);
 		model.particles.push(p)
@@ -194,24 +213,29 @@ function micro_slider(value){
 //technically I could just remove all the particles and add particles in but this way I could restrict sliders/buttons if needed.
 
 // to load a different state of Micro the model must be cleared (remove all gui items) and then the new model must be loaded
-function load_iso(){
+function load_iso()
+{
 	model.clear();
 	model = new Micro('isotonic');
 }
-function load_hypo(){
+function load_hypo()
+{
 	model.clear();
 	model = new Micro('hypotonic');
 }
-function load_hyper(){
+function load_hyper()
+{
 	model.clear();
 	model = new Micro('hypertonic');
 }
 
-function load_micro(){
+function load_micro()
+{
 	model.clear();
 	model = new Micro();
 }
-function load_advmicro(){
+function load_advmicro()
+{
 	model.clear();
 	model = new Micro('advanced');
 }

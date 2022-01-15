@@ -1,7 +1,9 @@
 // Object that is a type of model since it contains gui elements
 
-class Menu extends Model{
-	constructor(){
+class Menu extends Model
+{
+	constructor()
+	{
 		super();
 		
 		// Add the buttons so the user can control which model to be loaded
@@ -20,7 +22,8 @@ class Menu extends Model{
 }
 
 
-function load_menu(){
+function load_menu()
+{
 	model.clear();
 	model = new Menu();
 }

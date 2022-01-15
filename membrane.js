@@ -50,16 +50,16 @@ class Rect{
 					|						  |
 			  		|						  |
 			  __vX__|______	# (pX+vX,pY+vY)   |
-			  |		|	   /|				  |
-			  |		|	  /	|				  |
-			  |		|  __/	|				  |
-			vY|		|   /|	| l*vY			  |
-			  | 	|  /	|			      |
-			  | 	| /		|				  |
-			  | 	|/		|				  |
-			  |		#_______|				  |
-			  |    /|	l*vX				  |
-			  | __/_|_________________________|
+			  |		|	   /				  |
+			  |		|	  /					  |
+			  |		|  __/					  |
+			vY|		|   /|	 				  |
+			  | 	|  /				      |
+			  | 	| /						  |
+			  | 	|/						  |
+			  |_____#						  |
+			  |    /|						  |
+	l * vY	  | __/_|_________________________|
 			  |  #						 		(X + W, Y + H)
 			  | /
 			  |/ 
@@ -67,9 +67,9 @@ class Rect{
       
       
       
-      pX - l * vX = X
+      pX + l * vX = X
 	  
-	  l = (pX-X) / vX
+	  l = (X-pX) / vX
 	  
 	  mag l is less than 1 if it was previously outside the rectangle
 	  if l is greater than 0 and less than 1 then at some point along the prevous timestep it hit the boundary
@@ -89,24 +89,24 @@ class Rect{
 			
 			*/
 			// check left side
-			let l = ((pX-X)/vX);
+			let l = ((X-pX)/vX);
 			
-			if ( Y < pY - l * vY && (Y+H) > pY - l * vY && abs(l) < 1){
+			if ( Y < pY + l * vY && (Y+H) > pY + l * vY && abs(l) < 1){
 				other.velX *=-1;
 			}
 			// check right side
-			l = ((pX-(X+W))/vX);
-			if ( Y < pY - l*vY && (Y+H) > pY - l*vY && abs(l) < 1){
+			l = (((X+W)-pX)/vX);
+			if ( Y < pY + l*vY && (Y+H) > pY + l*vY && abs(l) < 1){
 				other.velX *=-1;
 			}
 			// check top
-			l = ((pY-Y)/vY);
-			if (X < pX - l*vX && (X+W) > pX - l * vX && abs(l) < 1) {
+			l = ((Y-pY)/vY);
+			if (X < pX + l*vX && (X+W) > pX + l * vX && abs(l) < 1) {
 				other.velY *=-1;
 			}
 			// check bottom
-			l = ((pY-(Y+H))/vY);
-			if( X < pX - l*vX && (X + W) > pX - l*vX && abs(l) < 1){				
+			l = (((Y+H)-pY)/vY);
+			if( X < pX + l*vX && (X + W) > pX + l*vX && abs(l) < 1){				
 				other.velY *=-1;
 			}
 			

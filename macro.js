@@ -1,6 +1,8 @@
 
-class Macro extends Model{
-	constructor(type){
+class Macro extends Model
+{
+	constructor(type)
+	{
 		// call Model.constructor()
 		super();
 		// A macro model has a list of particles and a list of Membranes, as well as an image that gets updated every frame
@@ -9,7 +11,8 @@ class Macro extends Model{
 		
 		Particle.drawText=false;
 
-		switch (type){
+		switch (type)
+		{
 			case 'split':
 				// Add Water to one side of the model
 				Particle.addParticles('w', 200000,'l',this.particles);
@@ -38,7 +41,8 @@ class Macro extends Model{
 
 	}
 	
-	draw(){
+	draw()
+	{
 		// get scale value from slider
 		let scale = pow(2,this.control.getVal('scale_slider'));
 		
@@ -46,8 +50,10 @@ class Macro extends Model{
 		// load pixels from created image
 		img.loadPixels();
 		//Set Image to White
-		for (let x = 0; x < img.width; x++) {
-			for (let y = 0; y < img.height; y++) {
+		for (let x = 0; x < img.width; x++)
+		{
+			for (let y = 0; y < img.height; y++)
+			{
 				let index = (x+y*img.width)*4;
 				
 				img.pixels[index]=255;
@@ -57,7 +63,8 @@ class Macro extends Model{
 			}
 		}
 		// draw particles
-		for (const p of this.particles){
+		for (const p of this.particles)
+		{
 
 			let index = round( round(p.posX/scale) + round(p.posY/scale) * (width/scale) )*4;
 			
@@ -86,7 +93,8 @@ class Macro extends Model{
 		// update the pixels to the image I just loaded
 		img.updatePixels();
 		image(img, 0,0,width,height);
-		for (const m of this.membranes){
+		for (const m of this.membranes)
+		{
 			m.draw();
 		}
 		this.control.draw();
@@ -101,32 +109,37 @@ class Macro extends Model{
 	}
 	
 	update(){
-		if (keyIsPressed){
-			if (key == 'w'){
+		if (keyIsPressed)
+		{
+			if (key == 'w')
+			{
 				// get currently used particles
 				let rad = this.control.getVal('drawing_radius');
 				let num = pow(rad, 2);
 				
-				for (let i=0; i<num; i++){
+				for (let i=0; i<num; i++)
+				{
 					let p;
 					p = new Water(mouseX + random(-rad, rad), mouseY+ random(-rad, rad));
 					p.setRandVel(1);
 					this.particles.push(p);
 				}
 			}
-			if (key == 's'){
+			if (key == 's')
+			{
 				// get currently used particles
 				let rad = this.control.getVal('drawing_radius');
 				let num = pow(rad, 2);
-				for (let i=0; i<num; i++){
+				for (let i=0; i<num; i++)
+				{
 					let p;
 					p = new Salt(mouseX + random(-rad, rad), mouseY+ random(-rad, rad));
-
 					p.setRandVel(1);
 					this.particles.push(p);
 				}
 			}
-			if ( key == 'm'){
+			if ( key == 'm')
+			{
 				// ideally I only want to call this on a single frame rather than continiously
 				let rad = this.control.getVal('draw_membrane_radius');
 				this.membranes.push(new CircularMembrane(mouseX, mouseY, rad, 5));
@@ -134,44 +147,54 @@ class Macro extends Model{
 			}
 		}
 		// allow creating particles but not moving particles
-		if (!this.paused){
+		if (!this.paused)
+		{
 		// imitate collitions
-			if (this.particles.length>0){
+			if (this.particles.length>0)
+			{
 				let num = int(random(0,this.particles.length/200));
-				for (let i=0; i<num;i++){
+				for (let i=0; i<num;i++)
+				{
 					const randIndex = int(random(0, this.particles.length));
 
 					this.particles[randIndex].setRandVel(random(1,2));
 				}
 			}
 		// update every particle
-			for (const p of this.particles){
-				for (const m of this.membranes){
+			for (const p of this.particles)
+			{
+				for (const m of this.membranes)
+				{
 					m.collide(p);
 				}
 				p.update();
 			}
 		}
 	}
-	reset(){
+	reset()
+	{
 		let len = this.particles.length;
-		for (let ind=0; ind<len; ind++){
+		for (let ind=0; ind<len; ind++)
+		{
 			this.particles.pop();
 		}
 		len = this.membranes.length;
-		for (let ind=0; ind<len; ind++){
+		for (let ind=0; ind<len; ind++)
+		{
 			this.membranes.pop();
 		}
 	}	
 }
 
 // functions to be used when pressing drawing
-function load_macro_split(){
+function load_macro_split()
+{
 	model.clear();
 	model = new Macro('split');
 }
 
-function load_macro(){
+function load_macro()
+{
 	model.clear();
 	model = new Macro();
 }

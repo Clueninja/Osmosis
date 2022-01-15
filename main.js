@@ -6,7 +6,8 @@ p5.disableFriendlyErrors = true;
 let model; // type Model
 
 // I try to make the main file as clean as possible, so if I wanted to create a new model it would not be difficult.
-function setup() {
+function setup()
+{
     textAlign(LEFT);
 	createCanvas(windowWidth, windowHeight);
 	//background(200);
@@ -16,13 +17,15 @@ function setup() {
 }
 
 // p5 function that gets called every frame
-function draw() {
+function draw()
+{
 	background(204);
 	model.update();
 	model.draw();
 }
 
-function reset(){
+function reset()
+{
 	model.reset();
 }
 
