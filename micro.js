@@ -37,7 +37,7 @@ class Micro extends Model
 				this.control.addSlider('membrane_num_slider','Number Of Rects', 2,20,10,width-200,80);
 				this.control.addSlider('membrane_gap_slider','Gap Between Rects', 1,100,55,width-200,110);
 				
-				Particle.drawText = true;
+				//Particle.drawText = true;
 				break;
 				
 		}
