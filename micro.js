@@ -183,6 +183,7 @@ class Micro extends Model
 		textAlign(LEFT);
 		textSize(20);
 		text('Press "P" to pause the model', 100, height-200);
+		text('Press "T" to dislay particle speed', 100, height-180);
 		
 	}
 	
