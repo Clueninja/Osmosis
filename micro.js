@@ -172,8 +172,13 @@ class Micro extends Model{
 	
 }
 // a really hacky solution because reset_membrane needs to be globally defined
-function reset_membrane(){
-	model.membrane = new Membrane(model.control.getVal('membrane_num_slider'), model.control.getVal('membrane_gap_slider'),model.control.getVal('membrane_width_slider'));
+function reset_membrane()
+{
+	model.membrane = new Membrane(
+		model.control.getVal('membrane_num_slider'),
+		model.control.getVal('membrane_gap_slider'),
+		model.control.getVal('membrane_width_slider')
+	);
 }
 
 // depreciated for Particles.addParticles()
