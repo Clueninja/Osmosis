@@ -152,5 +152,13 @@ function keyPressed()
 	{
 		Particle.drawText = !Particle.drawText;
 	}
+	// yes
+	if (key == 'm' && model instanceof Macro)
+	{
+		// ideally I only want to call this on a single frame rather than continiously
+		let rad = model.control.getVal('draw_membrane_radius');
+		model.membranes.push(new CircularMembrane(mouseX, mouseY, rad, 5));
+			
+	}
 }
 

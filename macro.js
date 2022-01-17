@@ -138,13 +138,7 @@ class Macro extends Model
 					this.particles.push(p);
 				}
 			}
-			if ( key == 'm')
-			{
-				// ideally I only want to call this on a single frame rather than continiously
-				let rad = this.control.getVal('draw_membrane_radius');
-				this.membranes.push(new CircularMembrane(mouseX, mouseY, rad, 5));
-				this.draw_membrane = false;
-			}
+			
 		}
 		// allow creating particles but not moving particles
 		if (!this.paused)
