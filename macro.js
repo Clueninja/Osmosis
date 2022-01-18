@@ -35,7 +35,7 @@ class Macro extends Model
 		// add a scale slider to edit the visuals/ make program run faster
 		this.control.addSlider('scale_slider', 'Scale Slider',0,4,2,50,height-70);
 
-		this.control.addSlider('drawing_radius', 'Drawing Slider',20,50,30,210,height-70);
+		this.control.addSlider('drawing_radius', 'Drawing Slider',40,100,50,210,height-70);
 
 		this.control.addSlider('draw_membrane_radius', 'Membrane Radius',100,300,150,370,height-70);
 
@@ -115,7 +115,7 @@ class Macro extends Model
 			{
 				// get currently used particles
 				let rad = this.control.getVal('drawing_radius');
-				let num = pow(rad, 2);
+				let num = 2*rad;
 				
 				for (let i=0; i<num; i++)
 				{
@@ -129,7 +129,7 @@ class Macro extends Model
 			{
 				// get currently used particles
 				let rad = this.control.getVal('drawing_radius');
-				let num = pow(rad, 2);
+				let num = 2*rad
 				for (let i=0; i<num; i++)
 				{
 					let p;

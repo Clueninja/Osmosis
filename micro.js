@@ -93,7 +93,7 @@ class Micro extends Model
 	drawText()
 	{
 		// function that needs improvement
-		// Big O complexity of n, which is fine
+		// Big O complexity of n, which is fine as computation is low
 		let left_water =0;
 		let left_salt =0;
 		let right_water =0;
@@ -132,10 +132,11 @@ class Micro extends Model
 	{
 		// update mass of particles and add particles
 		this.updateSliders();
-		// perform collisions between each particle
-		// Big O Complexity of n^2
+		
 		if (!this.paused)
 		{
+			// perform collisions between each particle
+			// Big O Complexity of n^2
 			for (const a of this.particles)
 			{
 				for (const b of this.particles)
