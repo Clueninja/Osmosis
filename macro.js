@@ -34,6 +34,7 @@ class Macro extends Model
 		this.control.addButton('reset_button',"Reset", reset, 350,height-190);
 		// add a scale slider to edit the visuals/ make program run faster
 		this.control.addSlider('scale_slider', 'Scale Slider',0,4,2,50,height-70);
+		this.control.addSlider('colour_slider', 'Colour Slider',0,255,0,50,height-50);
 
 		this.control.addSlider('drawing_radius', 'Drawing Slider',40,100,50,210,height-70);
 
@@ -43,8 +44,10 @@ class Macro extends Model
 	
 	draw()
 	{
+		let scale_val = this.control.getVal('scale_slider');
 		// get scale value from slider
-		let scale = pow(2,this.control.getVal('scale_slider'));
+		let scale = pow(2,scale_val);
+		const colour_palette = [ 250, 100, 30, 20, 5 ];
 		
 		let img = createImage(round(width/scale),round(height/scale));
 		// load pixels from created image
@@ -66,7 +69,8 @@ class Macro extends Model
 		for (const p of this.particles)
 		{
 
-			let index = round( round(p.posX/scale) + round(p.posY/scale) * (width/scale) )*4;
+			let index = round( round(p.posX/scale) + round(p.posY/scale) * round(width/scale) )*4;
+			let col = this.control.getVal('colour_slider');
 			
 			// 0 is red, 1 is green, 2 is blue, 3 is alpha
 			
@@ -75,20 +79,24 @@ class Macro extends Model
 			index = index-temp;
 			// change different rgb value for type of particle
 			if(p.type=='w'){
-				img.pixels[index+0]-= 255/pow(scale,2);
-				img.pixels[index+1]-= 255/pow(scale,2);
+			// scale 4: col 5-8
+			// scale 3: col 15-25
+			// scale 2: col 25-36
+			// scale 1: col 80-120
+			// scale 0: col 200-255
+				img.pixels[index+0]-= colour_palette[scale_val];
+				img.pixels[index+1]-= colour_palette[scale_val];
+
 			}
 			else if(p.type=='s'){
-				img.pixels[index+1]-= 255/pow(scale,2);
-				img.pixels[index+2]-= 255/pow(scale,2);
+				img.pixels[index+1]-=colour_palette[scale_val];
+				img.pixels[index+2]-= colour_palette[scale_val];
 			}
 			// default red colour
 			else{
-				img.pixels[index+1]-= 255/pow(scale,2);
-				img.pixels[index+2]-= 255/pow(scale,2);
+				img.pixels[index+1]-= colour_palette[scale_val];
+				img.pixels[index+2]-= colour_palette[scale_val];
 			}
-			// test
-			//circle(p.posX, p.posY, 1);
 		}
 		// update the pixels to the image I just loaded
 		img.updatePixels();

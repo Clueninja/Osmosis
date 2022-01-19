@@ -102,21 +102,21 @@ class Particle{
 	
 	update(){
 		// checks bounds then moves particle
-		if (this.posX < this.mass()){
+		if (this.posX + this.velX< 0){
 			this.velX *= -1;
-			this.posX = this.mass();
+			//this.posX = this.mass();
 		}
-		if (this.posX > width-this.mass()){
+		if (this.posX + this.velX > width){
 			this.velX *= -1;
-			this.posX = width-this.mass();
+			//this.posX = width-this.mass();
 		}
-		if (this.posY < this.mass()){
+		if (this.posY + this.velX < 0){
 			this.velY *= -1;
-			this.posY = this.mass();
+			//this.posY = this.mass();
 		}
-		if (this.posY > height-this.mass()){
+		if (this.posY + this.velY > height){
 			this.velY *= -1;
-			this.posY = height-this.mass();
+			//this.posY = height-this.mass();
 		}
 		
 		this.posX += this.velX;
