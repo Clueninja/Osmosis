@@ -15,10 +15,10 @@ class Macro extends Model
 		{
 			case 'split':
 				// Add Water to one side of the model
-				Particle.addParticles('w', 200000,'l',this.particles);
+				Particle.addParticles('w', 20000,'l',this.particles);
 
 				// and salt particles on the other side
-				Particle.addParticles('s', 20000,'r',this.particles);
+				Particle.addParticles('s', 2000,'r',this.particles);
 				break;
 		}
 		
@@ -34,7 +34,6 @@ class Macro extends Model
 		this.control.addButton('reset_button',"Reset", reset, 350,height-190);
 		// add a scale slider to edit the visuals/ make program run faster
 		this.control.addSlider('scale_slider', 'Scale Slider',0,4,2,50,height-70);
-		this.control.addSlider('colour_slider', 'Colour Slider',0,255,0,50,height-50);
 
 		this.control.addSlider('drawing_radius', 'Drawing Slider',40,100,50,210,height-70);
 
@@ -70,7 +69,6 @@ class Macro extends Model
 		{
 
 			let index = round( round(p.posX/scale) + round(p.posY/scale) * round(width/scale) )*4;
-			let col = this.control.getVal('colour_slider');
 			
 			// 0 is red, 1 is green, 2 is blue, 3 is alpha
 			
