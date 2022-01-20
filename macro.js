@@ -9,6 +9,9 @@ class Macro extends Model
 		this.particles = [];
 		this.membranes=[];
 		
+		this.image;
+		this.scale = -1;
+		
 		Particle.drawText=false;
 
 		switch (type)
@@ -47,21 +50,26 @@ class Macro extends Model
 		// get scale value from slider
 		let scale = pow(2,scale_val);
 		const colour_palette = [ 250, 100, 30, 20, 5 ];
-		
-		let img = createImage(round(width/scale),round(height/scale));
+		// if the scale has changed
+		if (scale_val != this.scale){
+			// reset the image
+			this.img = createImage(round(width/scale),round(height/scale));
 		// load pixels from created image
-		img.loadPixels();
+			this.img.loadPixels();
+			this.scale = scale_val;
+		}
+		
 		//Set Image to White
-		for (let x = 0; x < img.width; x++)
+		for (let x = 0; x < this.img.width; x++)
 		{
-			for (let y = 0; y < img.height; y++)
+			for (let y = 0; y < this.img.height; y++)
 			{
-				let index = (x+y*img.width)*4;
+				let index = (x+y*this.img.width)*4;
 				
-				img.pixels[index]=255;
-				img.pixels[index+1]=255;
-				img.pixels[index+2]=255;
-				img.pixels[index+3]=255;
+				this.img.pixels[index]=255;
+				this.img.pixels[index+1]=255;
+				this.img.pixels[index+2]=255;
+				this.img.pixels[index+3]=255;
 			}
 		}
 		// draw particles
@@ -82,23 +90,23 @@ class Macro extends Model
 			// scale 2: col 25-36
 			// scale 1: col 80-120
 			// scale 0: col 200-255
-				img.pixels[index+0]-= colour_palette[scale_val];
-				img.pixels[index+1]-= colour_palette[scale_val];
+				this.img.pixels[index+0]-= colour_palette[scale_val];
+				this.img.pixels[index+1]-= colour_palette[scale_val];
 
 			}
 			else if(p.type=='s'){
-				img.pixels[index+1]-=colour_palette[scale_val];
-				img.pixels[index+2]-= colour_palette[scale_val];
+				this.img.pixels[index+1]-=colour_palette[scale_val];
+				this.img.pixels[index+2]-= colour_palette[scale_val];
 			}
 			// default red colour
 			else{
-				img.pixels[index+1]-= colour_palette[scale_val];
-				img.pixels[index+2]-= colour_palette[scale_val];
+				this.img.pixels[index+1]-= colour_palette[scale_val];
+				this.img.pixels[index+2]-= colour_palette[scale_val];
 			}
 		}
 		// update the pixels to the image I just loaded
-		img.updatePixels();
-		image(img, 0,0,width,height);
+		this.img.updatePixels();
+		image(this.img, 0,0,width,height);
 		for (const m of this.membranes)
 		{
 			m.draw();
