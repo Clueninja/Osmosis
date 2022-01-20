@@ -50,12 +50,15 @@ class Macro extends Model
 		// get scale value from slider
 		let scale = pow(2,scale_val);
 		const colour_palette = [ 250, 100, 30, 20, 5 ];
+		
+		// This change improved the performance BY A LOT
 		// if the scale has changed
 		if (scale_val != this.scale){
 			// reset the image
 			this.img = createImage(round(width/scale),round(height/scale));
-		// load pixels from created image
+			// load pixels from created image
 			this.img.loadPixels();
+			// set the scale so the image can be updated later
 			this.scale = scale_val;
 		}
 		
@@ -127,7 +130,6 @@ class Macro extends Model
 		{
 			if (key == 'w')
 			{
-				// get currently used particles
 				let rad = this.control.getVal('drawing_radius');
 				let num = 2*rad;
 				
@@ -141,7 +143,6 @@ class Macro extends Model
 			}
 			if (key == 's')
 			{
-				// get currently used particles
 				let rad = this.control.getVal('drawing_radius');
 				let num = 2*rad
 				for (let i=0; i<num; i++)
