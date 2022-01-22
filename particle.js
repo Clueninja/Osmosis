@@ -4,7 +4,8 @@
 // No Instance of a particle should occur
 class Particle{
     static drawText = false;
-	constructor(posX, posY){
+	constructor(posX, posY)
+	{
 		// every particle has position and velocity as well as a type and mass
 		this.posX=posX;
 		this.posY=posY;
@@ -16,17 +17,19 @@ class Particle{
 	mass(){ return 10;}
 	
 	// setter function for velocity
-	setVel(x,y){
+	setVel(x,y)
+	{
 		this.velX=x;
 		this.velY=y;
 	}
 	// sett random velocity with magnitude speed
-	setRandVel(speed){
+	setRandVel(speed)
+	{
 		let theta = random(0,360);
 		this.velX=speed*cos(theta);
 		this.velY=speed*sin(theta);
-		
 	}
+	
 	// used to add many particles at a time
 	static addParticles(type,num,side,list){
         // If the number of particles is being increased
@@ -52,7 +55,7 @@ class Particle{
 					default:p = new Particle(posX,posY);
 				}
 				// set the particle to a random velocity
-				p.setRandVel(random(2,5));
+				p.setRandVel(random(5, 10));
 				// push the new particle to the list passed in by reference so it is added
 				list.push(p);
 			}
@@ -118,20 +121,19 @@ class Particle{
 			this.velY *= -1;
 			//this.posY = height-this.mass();
 		}
-		
-		this.posX += this.velX;
-		this.posY += this.velY;
+		this.posX += this.velX*deltaTime/100;
+		this.posY += this.velY*deltaTime/100;
 	}
 	// particle collide with particle
 	// membrane.collide handles collisions with membranes
 	// should be well optimised so having to check the other particle is not necessary but not really an issue
 	
 	collide(other){
-	
+		
 		let dis_sqrd = pow(this.posX-other.posX,2)+pow(this.posY-other.posY,2);
 		
 		// if next frame, the particles are colliding
-		if ( pow(this.posX+this.velX-other.posX-other.velX,2)+pow(this.posY+this.velX-other.posY-other.velY,2) < pow(this.mass()+other.mass(),2)){
+		if ( pow(this.posX+this.velX*deltaTime/100 - other.posX-other.velX*deltaTime/100,2) + pow(this.posY+this.velX*deltaTime/100-other.posY-other.velY*deltaTime/100,2) < pow(this.mass()+other.mass(),2)){
 			
 			let mag_vel = sqrt(pow(this.velX,2)+pow(this.velY,2));
 			

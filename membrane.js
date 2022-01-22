@@ -25,8 +25,8 @@ class Rect{
 		*/
 		let pX=other.posX;
 		let pY= other.posY;
-		let vY = other.velY;
-		let vX = other.velX;
+		let vY = other.velY*deltaTime/100;
+		let vX = other.velX*deltaTime/100;
 		
 		
 		let X = this.x-other.mass();
@@ -193,7 +193,7 @@ class CircularMembrane{
 		// if particle is inside membrane edge
 		let is_inside = pow(pX-this.x,2) + pow(pY-this.y,2) < pow(this.rad,2);
 
-		let is_inside_next_frame = pow(pX+vX-this.x,2) + pow(pY+vY-this.y,2) < pow(this.rad,2);
+		let is_inside_next_frame = pow(pX+vX*deltaTime/100-this.x,2) + pow(pY+vY*deltaTime/100-this.y,2) < pow(this.rad,2);
 
 		if((is_inside && !is_inside_next_frame) ||(!is_inside && is_inside_next_frame)){
 		// if the partcle is water
