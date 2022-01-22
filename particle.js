@@ -178,12 +178,12 @@ class Water extends Particle{
 	constructor(posX,posY){super(posX,posY);this.type='w';}
 	mass(){return Water.sMass;}
 	// draw blue circle
-	draw(){fill('blue'); super.draw();}
+	draw(){fill('blue'); strokeWeight(2); super.draw();}
 }
 class Salt extends Particle{
 	static sMass=30;
 	constructor(posX,posY){super(posX,posY);this.type='s';}
 	mass(){return Salt.sMass;}
 	// draw red circle
-	draw(){ fill('red'); super.draw();}
+	draw(){ fill('red'); strokeWeight(2); super.draw();}
 }

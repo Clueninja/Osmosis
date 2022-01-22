@@ -1,3 +1,4 @@
+// each rectangle of the membrane needs its own collision, drawing and properties
 class Rect{
 	constructor(x,y,w,h){this.x=x;this.y=y;this.w=w;this.h=h;}
 	
@@ -141,6 +142,7 @@ class Membrane{
 	draw(){
 		// draw individual rectangles
 		fill('purple');
+		strokeWeight(2)
 		for (const r of this.rects){
 			r.draw();
 		}
