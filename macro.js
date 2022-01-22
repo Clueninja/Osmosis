@@ -10,7 +10,7 @@ class Macro extends Model
 		this.membranes=[];
 		
 		this.image;
-		this.scale = -1;
+		this.scale = 0;
 		
 		Particle.drawText=false;
 

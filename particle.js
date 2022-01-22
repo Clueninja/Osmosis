@@ -31,11 +31,14 @@ class Particle{
 	}
 	
 	// used to add many particles at a time
-	static addParticles(type,num,side,list){
+	static addParticles(type,num,side,list)
+	{
         // If the number of particles is being increased
-		if (num>0){
+		if (num>0)
+		{
 		    // for each particle to be added...
-			for (let pind=0;pind<int(num);pind++){
+			for (let pind=0;pind<int(num);pind++)
+			{
 			    // create a particle...
 				let p;
 				// with a random velocity
@@ -43,13 +46,15 @@ class Particle{
 				// top and bottom quadrants do not need to be checked
 				posY = random(0,height);
 				// set x postion depending on the side of the membrane
-				switch (side){
+				switch (side)
+				{
 					case 'l': posX = random(0,width/2-100); break;
 					case 'r': posX = random(width/2+100,width); break;
 					default: posX = random(0,width);
 				}
 				// set type of the particle depending on the type parameter
-				switch (type){
+				switch (type)
+				{
 					case 's':p = new Salt(posX,posY);break;
 					case 'w':p = new Water(posX,posY);break;
 					default:p = new Particle(posX,posY);
@@ -65,7 +70,8 @@ class Particle{
 			// for each particle to be removed
 			let n=0;let i=0;
 			// while the number of particles removed is less than the number of particles to be removed and the index of particle is less than the total number of particles
-			while(n<-num && i<list.length){
+			while(n<-num && i<list.length)
+			{
 				// get the particle at the index
 				let p = list[i];
 				// check if it is in the correct area of the screen
@@ -93,9 +99,11 @@ class Particle{
 	}
 	
 	
-	draw(){
+	draw()
+	{
 	    circle(this.posX, this.posY, 2*this.mass());
-	    if (Particle.drawText){
+	    if (Particle.drawText)
+	    {
 	        fill(0);
 		    textAlign(LEFT);
 		    textSize(20);
@@ -103,24 +111,22 @@ class Particle{
 	    }
 	}
 	
-	update(){
+	update()
+	{
 		// checks bounds then moves particle
-		if (this.posX + this.velX< 0){
+		if (this.posX + this.velX*deltaTime/100< 0)
 			this.velX *= -1;
-			//this.posX = this.mass();
-		}
-		if (this.posX + this.velX > width){
+
+		if (this.posX + this.velX*deltaTime/100 > width)
 			this.velX *= -1;
-			//this.posX = width-this.mass();
-		}
-		if (this.posY + this.velX < 0){
+
+		
+		if (this.posY + this.velX*deltaTime/100 < 0)
 			this.velY *= -1;
-			//this.posY = this.mass();
-		}
-		if (this.posY + this.velY > height){
+		
+		if (this.posY + this.velY*deltaTime/100 > height)
 			this.velY *= -1;
-			//this.posY = height-this.mass();
-		}
+		
 		this.posX += this.velX*deltaTime/100;
 		this.posY += this.velY*deltaTime/100;
 	}
