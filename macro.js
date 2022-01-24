@@ -161,7 +161,7 @@ class Macro extends Model
 			}
 			
 		}
-		// allow creating particles but not moving particles
+		// Allow creating particles but not moving particles while paused
 		if (!this.paused)
 		{
 		// imitate collitions

@@ -22,7 +22,8 @@ class slider
 		this.prevalue = this.slider.value();
 		return this.prevalue;
 	}
-	// sometimes the value isnt useful on its own so this returns the displacement from its previous value so the old value doesn't have to be stored
+	// Returns the displacement from its previous value.
+	// Old value gets changed once called ie only use once!
 	diff()
 	{
 		let temp = this.prevalue;
@@ -30,9 +31,9 @@ class slider
 		return this.prevalue-temp;
 	}
 }
-// gui element button class that stores an id, and a p5 button
-// Makes gui management easier
 
+// GUI element button class that stores an id, and a p5 button
+// Makes gui management easier
 class button
 {
 	constructor(id, string,func, x,y)
@@ -43,7 +44,8 @@ class button
 		this.button.mousePressed(func);
 	}
 }
-// controller contains sliders and buttons and methods to retreive values
+
+// Controller used to store GUI elements
 class controller
 {
 	constructor()
@@ -123,7 +125,7 @@ class controller
 
 }
 
-// a model contains a button/slider controller and basic functions for compatability
+// Model has a controller to store GUI elements and virtual functions for inherited models to implement
 class Model
 {
 	constructor()
@@ -141,7 +143,7 @@ class Model
 	//remove buttons and sliders
 	clear(){this.control.clear();}
 }
-
+// handle keys being pressed and NOT held
 function keyPressed()
 {
 	if (key == 'p')
@@ -155,7 +157,6 @@ function keyPressed()
 	// yes
 	if (key == 'm' && model instanceof Macro)
 	{
-		// ideally I only want to call this on a single frame rather than continiously
 		let rad = model.control.getVal('draw_membrane_radius');
 		model.membranes.push(new CircularMembrane(mouseX, mouseY, rad, 5));
 			

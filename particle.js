@@ -48,6 +48,7 @@ class Particle{
 				// set x postion depending on the side of the membrane
 				switch (side)
 				{
+					// TODO: fix bug if mass > 30
 					case 'l': 
 						posX = random(30,width/2-100); break;
 					case 'r':

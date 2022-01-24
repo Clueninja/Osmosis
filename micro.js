@@ -134,12 +134,12 @@ class Micro extends Model
 	
 	update()
 	{
-		// update mass of particles and add particles
+		// Update mass of particles and add particles
 		this.updateSliders();
 		
 		if (!this.paused)
 		{
-			// perform collisions between each particle
+			// Perform collisions between each particle
 			// Big O Complexity of n^2
 			for (const a of this.particles)
 			{
@@ -147,21 +147,21 @@ class Micro extends Model
 				{
 					if (a != b)
 					{
-						// its a constant variable yet I'm editing it in the collide method, this shouldn't be possible
 						a.collide(b);
 					}
 				}
-				// check collisions with membrane 
+				// Check collisions with membrane 
 				this.membrane.collide(a);
-				// update particle's position
+				
+				// Update particle's position
 				a.update();
 			}
 		}
 	}
-	// reset the model
+	// Reset the model
 	reset()
 	{
-		// remove all particles
+		// Remove all particles
 		let len = this.particles.length;
 		for (let i=0; i<len;i++){
 			this.particles.pop();
