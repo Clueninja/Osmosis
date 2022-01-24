@@ -4,6 +4,8 @@
 // No Instance of a particle should occur
 class Particle{
     static drawText = false;
+    static max_Vel = 20;
+    static min_Vel = 10;
 	constructor(posX, posY)
 	{
 		// every particle has position and velocity as well as a type and mass
@@ -23,8 +25,9 @@ class Particle{
 		this.velY=y;
 	}
 	// sett random velocity with magnitude speed
-	setRandVel(speed)
+	setRandVel()
 	{
+		let speed = random(Particle.min_Vel, Particle.max_Vel);
 		let theta = random(0,360);
 		this.velX=speed*cos(theta);
 		this.velY=speed*sin(theta);
@@ -39,17 +42,18 @@ class Particle{
 		    // for each particle to be added...
 			for (let pind=0;pind<int(num);pind++)
 			{
-			    // create a particle...
 				let p;
-				// with a random velocity
 				let posX,posY;
 				// top and bottom quadrants do not need to be checked
 				// set x postion depending on the side of the membrane
 				switch (side)
 				{
-					case 'l': posX = random(0,width/2-100); break;
-					case 'r': posX = random(width/2+100,width); break;
-					default: posX = random(0,width);
+					case 'l': 
+						posX = random(30,width/2-100); break;
+					case 'r':
+						posX = random(width/2+100,width-30); break;
+					default:
+						posX = random(100,width);
 				}
 				// set type of the particle depending on the type parameter
 				switch (type)
@@ -66,7 +70,7 @@ class Particle{
 						p = new Particle(posX,posY);
 				}
 				// set the particle to a random velocity
-				p.setRandVel(random(10, 20));
+				p.setRandVel();
 				// push the new particle to the list passed in by reference so it is added
 				list.push(p);
 			}

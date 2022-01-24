@@ -2,20 +2,21 @@ class Micro extends Model
 {
 	constructor(type)
 	{
-		// run Model.constructor()
+		// Run Model.constructor()
 		super();
 		
-		// a micro model contains a list of particles (Water or Salt) and a membrane that has some dimensions
+		// A micro model contains a list of Particle(s) (Water or Salt) and a Membrane.
 		this.particles = [];
 		this.membrane = new Membrane(10,55,10);
 		Particle.drawText = false;
-		// starting initial conditions
+		// Starting initial conditions.
+		// Set static water and salt masses.
 		Water.sMass=5;
 		Salt.sMass=30;
 		switch (type)
 		{
 			case 'isotonic':
-				// particles spawned on left							particles spawned on right
+				// Particles spawned on left							Particles spawned on right
 				Particle.addParticles('w', 150,'l',this.particles);		Particle.addParticles('w', 150,'r',this.particles);
 				Particle.addParticles('s', 10,'l',this.particles);		Particle.addParticles('s', 10,'r',this.particles);
 				break;
@@ -29,17 +30,19 @@ class Micro extends Model
 				break;
 				
 			case 'advanced':
-				// if the advanced model is loaded
+				// If the advanced model is loaded...
+				// Setup mass sliders
 				this.control.addSlider('water_mass_slider','Water Mass', 5,40,5,width/2-200,height-100);
 				this.control.addSlider('salt_mass_slider','Salt Mass', 10,40,30,width/2+200,height-100);
-			
+				
+				// Set reset Membrane button
 				this.control.addButton('reset_membrane_button', 'Reset Membrane',reset_membrane, width-200,130);
 				
+				// Setup sliders for membrane dimensions
 				this.control.addSlider('membrane_width_slider','Membrane Width', 10,100,30,width-200,50);
 				this.control.addSlider('membrane_num_slider','Number Of Rects', 2,20,10,width-200,80);
 				this.control.addSlider('membrane_gap_slider','Gap Between Rects', 1,100,55,width-200,110);
 				
-				//Particle.drawText = true;
 				break;
 				
 		}
@@ -62,9 +65,9 @@ class Micro extends Model
 	
 	updateSliders()
 	{
-		// edit micro model to utilise particles
+		// Edit micro model to utilise particles
 		let num = this.control.getDiff('salt_left_slider');
-		// always check if the slider exists before trying to use the value
+		// Always check if the slider exists before trying to use the value
 		if (num !=null)
 			Particle.addParticles('s',num,'l', this.particles);
 		
@@ -80,7 +83,7 @@ class Micro extends Model
 		if (num !=null)
 			Particle.addParticles('w',num,'r', this.particles);
 		
-		// update salt and water mass so slow function isnt called a lot
+		// Update salt and water mass so slow function is not called a lot.
 		
 		let mass =this.control.getVal('water_mass_slider');
 		if (mass != null)
@@ -91,10 +94,9 @@ class Micro extends Model
 			Salt.sMass = mass;
 	}
 	
-	// draws the particle count on the screen
+	// Draws the particle count on the screen
 	drawText()
 	{
-		// function that needs improvement
 		// Big O complexity of n, which is fine as computation is low
 		let left_water =0;
 		let left_salt =0;
@@ -169,30 +171,31 @@ class Micro extends Model
 	
 	draw()
 	{
-	// draw each particle
+	// Draw each particle in particles
 		for (const p of this.particles){
 			p.draw();
 		}
-	// draw membrane
+	// Draw membrane
 		this.membrane.draw();
 		
-	// draw text for sliders
+	// Draw text for sliders
 		this.control.draw();
 		
-	// draw text for particle count
+	// Draw text for particle count
 		this.drawText();
 
 		fill(0);
 		textAlign(LEFT);
 		textSize(20);
 		text('Press "P" to pause the model', 100, height-200);
-		text('Press "T" to dislay particle speed', 100, height-180);
+		text('Press "T" to display particle speed', 100, height-180);
 		
 	}
 	
 	
 }
-// a really hacky solution because reset_membrane needs to be globally defined
+// The button to reset membrane needs to be globally defined, so this function has undefined behaviour if called in the macro model.
+// (model.membrane is not defined)
 function reset_membrane()
 {
 	model.membrane = new Membrane(
@@ -202,21 +205,11 @@ function reset_membrane()
 	);
 }
 
-// depreciated for Particles.addParticles()
-function micro_slider(value)
-{
-	for (let i=0; i<value;i++)
-	{
-		let p = new Particle(random(0,width), random(0,height));
-		p.setRandVel(micro_water_speed/10);
-		model.particles.push(p)
-	}
-}
-// for these it is required as models need to be loaded from outside the model, at least in this paradigm these functions are inside the models file rather than in main.
+// For these it is required as models need to be loaded from outside the model, at least in this paradigm.
 
-//technically I could just remove all the particles and add particles in but this way I could restrict sliders/buttons if needed.
 
-// to load a different state of Micro the model must be cleared (remove all gui items) and then the new model must be loaded
+// To load a different state of Micro, the model must be cleared (remove all gui items) and then the new model must be loaded
+// This is important in the case of changing from the advanced mode to the simple mode where sliders may remain.
 function load_iso()
 {
 	model.clear();
