@@ -44,7 +44,6 @@ class Particle{
 				// with a random velocity
 				let posX,posY;
 				// top and bottom quadrants do not need to be checked
-				posY = random(0,height);
 				// set x postion depending on the side of the membrane
 				switch (side)
 				{
@@ -55,12 +54,19 @@ class Particle{
 				// set type of the particle depending on the type parameter
 				switch (type)
 				{
-					case 's':p = new Salt(posX,posY);break;
-					case 'w':p = new Water(posX,posY);break;
-					default:p = new Particle(posX,posY);
+					case 's':
+						posY = random(Salt.sMass, height-Salt.sMass);
+						p = new Salt(posX,posY);
+						break;
+					case 'w':
+						posY = random(Water.sMass, height-Water.sMass);
+						p = new Water(posX,posY);
+						break;
+					default:
+						p = new Particle(posX,posY);
 				}
 				// set the particle to a random velocity
-				p.setRandVel(random(5, 10));
+				p.setRandVel(random(10, 20));
 				// push the new particle to the list passed in by reference so it is added
 				list.push(p);
 			}
@@ -113,32 +119,32 @@ class Particle{
 	
 	update()
 	{
-		// checks bounds then moves particle
-		if (this.posX + this.velX*deltaTime/100< 0)
+		// checks if the particle's position next frame will be out of bounds
+		if (this.posX + this.velX*deltaTime/100< this.mass())
 			this.velX *= -1;
 
-		if (this.posX + this.velX*deltaTime/100 > width)
+		if (this.posX + this.velX*deltaTime/100 > width-this.mass())
 			this.velX *= -1;
 
 		
-		if (this.posY + this.velX*deltaTime/100 < 0)
+		if (this.posY + this.velX*deltaTime/100 < this.mass())
 			this.velY *= -1;
 		
-		if (this.posY + this.velY*deltaTime/100 > height)
+		if (this.posY + this.velY*deltaTime/100 > height-this.mass())
 			this.velY *= -1;
 		
 		this.posX += this.velX*deltaTime/100;
 		this.posY += this.velY*deltaTime/100;
 	}
 	// particle collide with particle
-	// membrane.collide handles collisions with membranes
-	// should be well optimised so having to check the other particle is not necessary but not really an issue
+	// membrane.collide handles collisions between particles and membranes
 	
 	collide(other){
 		
 		let dis_sqrd = pow(this.posX-other.posX,2)+pow(this.posY-other.posY,2);
 		
 		// if next frame, the particles are colliding
+		// minimal computation if the particles are not colliding
 		if ( pow(this.posX+this.velX*deltaTime/100 - other.posX-other.velX*deltaTime/100,2) + pow(this.posY+this.velX*deltaTime/100-other.posY-other.velY*deltaTime/100,2) < pow(this.mass()+other.mass(),2))
 		{
 			

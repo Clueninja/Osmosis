@@ -13,6 +13,8 @@ class Macro extends Model
 		this.scale = 0;
 		
 		Particle.drawText=false;
+		Water.sMass=0;
+		Salt.sMass=0;
 
 		switch (type)
 		{

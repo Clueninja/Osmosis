@@ -10,6 +10,8 @@ class Micro extends Model
 		this.membrane = new Membrane(10,55,10);
 		Particle.drawText = false;
 		// starting initial conditions
+		Water.sMass=5;
+		Salt.sMass=30;
 		switch (type)
 		{
 			case 'isotonic':
