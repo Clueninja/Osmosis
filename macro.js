@@ -137,7 +137,7 @@ class Macro extends Model
 				{
 					let p;
 					p = new Water(mouseX + random(-rad, rad), mouseY+ random(-rad, rad));
-					p.setRandVel(random(1,2));
+					p.setRandVel(random(4,8));
 					this.particles.push(p);
 				}
 			}
@@ -149,7 +149,7 @@ class Macro extends Model
 				{
 					let p;
 					p = new Salt(mouseX + random(-rad, rad), mouseY+ random(-rad, rad));
-					p.setRandVel(random(1,2));
+					p.setRandVel(random(4,8));
 					this.particles.push(p);
 				}
 			}

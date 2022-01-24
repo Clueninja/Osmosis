@@ -4,7 +4,8 @@ class Rect{
 	
 	draw(){rect(this.x,this.y,this.w,this.h);}
 	
-	collide(other){
+	collide(other)
+	{
 
 		/*
 		create a larger rectangle
@@ -91,10 +92,8 @@ class Rect{
 			*/
 			// check left side
 			let l = ((X-pX)/vX);
-			
-			if ( Y < pY + l * vY && (Y+H) > pY + l * vY && abs(l) < 1){
+			if ( Y < pY + l * vY && (Y+H) > pY + l * vY && abs(l) < 1)
 				other.velX *=-1;
-			}
 			// check right side
 			l = (((X+W)-pX)/vX);
 			if ( Y < pY + l*vY && (Y+H) > pY + l*vY && abs(l) < 1){
@@ -102,22 +101,20 @@ class Rect{
 			}
 			// check top
 			l = ((Y-pY)/vY);
-			if (X < pX + l*vX && (X+W) > pX + l * vX && abs(l) < 1) {
+			if (X < pX + l*vX && (X+W) > pX + l * vX && abs(l) < 1)
 				other.velY *=-1;
-			}
+			
 			// check bottom
 			l = (((Y+H)-pY)/vY);
-			if( X < pX + l*vX && (X + W) > pX + l*vX && abs(l) < 1){				
+			if( X < pX + l*vX && (X + W) > pX + l*vX && abs(l) < 1)			
 				other.velY *=-1;
-			}
 			
 			if ( pX > X && pX < X + W && pY > Y && pY < Y + H ){
-			    if (vX>0){
+			    if (vX>0)
 			        this.posX = X;
-			    }
-			    else{
+			    
+			    else
 			        this.posX = X+W;
-			    }
 			}
 		}
 	}
