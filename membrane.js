@@ -1,5 +1,6 @@
 // each rectangle of the membrane needs its own collision, drawing and properties
-class Rect{
+class Rect
+{
 	constructor(x,y,w,h){this.x=x;this.y=y;this.w=w;this.h=h;}
 	
 	draw(){rect(this.x,this.y,this.w,this.h);}
@@ -36,7 +37,8 @@ class Rect{
 		let H = this.h+other.mass()*2;
 
 		// check if the particle is colliding next frame
-		if ( pX+vX > X && pX+vX < X + W && pY+vY > Y && pY+vY < Y + H ){
+		if ( pX+vX > X && pX+vX < X + W && pY+vY > Y && pY+vY < Y + H )
+		{
 			
 			
 		
@@ -96,9 +98,9 @@ class Rect{
 				other.velX *=-1;
 			// check right side
 			l = (((X+W)-pX)/vX);
-			if ( Y < pY + l*vY && (Y+H) > pY + l*vY && abs(l) < 1){
+			if ( Y < pY + l*vY && (Y+H) > pY + l*vY && abs(l) < 1)
 				other.velX *=-1;
-			}
+			
 			// check top
 			l = ((Y-pY)/vY);
 			if (X < pX + l*vX && (X+W) > pX + l * vX && abs(l) < 1)
@@ -109,7 +111,8 @@ class Rect{
 			if( X < pX + l*vX && (X + W) > pX + l*vX && abs(l) < 1)			
 				other.velY *=-1;
 			
-			if ( pX > X && pX < X + W && pY > Y && pY < Y + H ){
+			if ( pX > X && pX < X + W && pY > Y && pY < Y + H )
+			{
 			    if (vX>0)
 			        this.posX = X;
 			    
@@ -132,7 +135,8 @@ class Membrane{
 			let tlx=(width/2)-(rect_width/2);
 			let tly=0;
 
-			for (let n=0;n<num; n++){
+			for (let n=0;n<num; n++)
+			{
 				this.rects[n] = new Rect(tlx, tly, rect_width, height_rect);
 				tly= tly + height_rect + gap;
 			}
@@ -143,7 +147,8 @@ class Membrane{
 		// draw individual rectangles
 		fill('purple');
 		strokeWeight(2)
-		for (const r of this.rects){
+		for (const r of this.rects)
+		{
 			r.draw();
 		}
 	}

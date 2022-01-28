@@ -186,13 +186,8 @@ class Particle
 				other.posX = distance_to_be_moved * (otherposX-thisposX)/sqrt(dis_sqrd) +otherposX;
 				other.posY = distance_to_be_moved * (otherposY-thisposY)/sqrt(dis_sqrd)+otherposY;
 			}
-			
-			
-			
 		}
-	
 	}
-
 }
 // statically defined mass makes sense since all water particles have the same size/mass
 // the main difference is different mass variables and colour/draw methods
