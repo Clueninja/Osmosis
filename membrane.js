@@ -121,12 +121,14 @@ class Rect{
 }
 
 class Membrane{
-	constructor(num, gap, rect_width){
+	constructor(num, gap, rect_width)
+	{
 		// a membrane contains a list of rectangles that the particles can collide with
 		this.rects = [];
 		// calculate the position and height of each rectangle
 		let height_rect = (height-(num-1)*gap)/num;
-		if (height_rect>1){
+		if (height_rect>1)
+		{
 			let tlx=(width/2)-(rect_width/2);
 			let tly=0;
 
@@ -136,7 +138,8 @@ class Membrane{
 			}
 		}
 	}
-	draw(){
+	draw()
+	{
 		// draw individual rectangles
 		fill('purple');
 		strokeWeight(2)
@@ -146,8 +149,10 @@ class Membrane{
 	}
 	
 	// membrane collides with particle
-	collide(other){
-		for (const r of this.rects){
+	collide(other)
+	{
+		for (const r of this.rects)
+		{
 			r.collide(other);
 		}
 	}
@@ -155,12 +160,19 @@ class Membrane{
 
 
 
-class CircularMembrane{
+class CircularMembrane
+{
 	constructor(x,y, rad, edge){this.x=x;this.y=y,this.rad=rad; this.edge= edge;}
 	
-	draw(){fill(color(0,0,0,0));strokeWeight(this.edge);circle(this.x, this.y, this.rad*2);}
+	draw()
+	{
+		fill(color(0,0,0,0));
+		strokeWeight(this.edge);
+		circle(this.x, this.y, this.rad*2);
+	}
 	
-	reflect(other){
+	reflect(other)
+	{
 		let pX=other.posX; let pY=other.posY;
 		let vY = other.velY; let vX = other.velX;
 		// create normal vector from the centre of the circle to the particle
@@ -184,7 +196,8 @@ class CircularMembrane{
 
 	}
 	
-	collide(other){
+	collide(other)
+	{
 		let pX=other.posX; let pY=other.posY;
 		let vY = other.velY; let vX = other.velX;
 		// if particle is inside membrane edge
@@ -192,16 +205,20 @@ class CircularMembrane{
 
 		let is_inside_next_frame = pow(pX+vX*deltaTime/100-this.x,2) + pow(pY+vY*deltaTime/100-this.y,2) < pow(this.rad,2);
 
-		if((is_inside && !is_inside_next_frame) ||(!is_inside && is_inside_next_frame)){
+		if((is_inside && !is_inside_next_frame) ||(!is_inside && is_inside_next_frame))
+		{
 		// if the partcle is water
-			if (other.type == 'w'){
+			if (other.type == 'w')
+			{
 				// then there is a probability of passing through the membrane
 				// if the particle is reflected
-				if (int(random(0,10))!=1){
+				if (int(random(0,10))!=1)
+				{
 					this.reflect(other);
 				}
 			}
-			else if (other.type == 's'){
+			else if (other.type == 's')
+			{
 				// always reflect salt particles
 				this.reflect(other);
 			

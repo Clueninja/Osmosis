@@ -2,7 +2,8 @@
 // Particle is an abstract class
 // It is only used as a building block to make Water and Salt Particles
 // No Instance of a particle should occur
-class Particle{
+class Particle
+{
     static drawText = false;
     static max_Vel = 20;
     static min_Vel = 10;
@@ -144,7 +145,8 @@ class Particle{
 	// particle collide with particle
 	// membrane.collide handles collisions between particles and membranes
 	
-	collide(other){
+	collide(other)
+	{
 		
 		let dis_sqrd = pow(this.posX-other.posX,2)+pow(this.posY-other.posY,2);
 		
@@ -194,17 +196,37 @@ class Particle{
 }
 // statically defined mass makes sense since all water particles have the same size/mass
 // the main difference is different mass variables and colour/draw methods
-class Water extends Particle{
+class Water extends Particle
+{
 	static sMass=5;
-	constructor(posX,posY){super(posX,posY);this.type='w';}
+	constructor(posX,posY)
+	{
+		super(posX,posY);
+		this.type='w';
+	}
 	mass(){return Water.sMass;}
 	// draw blue circle
-	draw(){fill('blue'); strokeWeight(2); super.draw();}
+	draw()
+	{
+		fill('blue');
+		strokeWeight(2);
+		super.draw();
+	}
 }
-class Salt extends Particle{
+class Salt extends Particle
+{
 	static sMass=30;
-	constructor(posX,posY){super(posX,posY);this.type='s';}
+	constructor(posX,posY)
+	{
+		super(posX,posY);
+		this.type='s';
+	}
 	mass(){return Salt.sMass;}
 	// draw red circle
-	draw(){ fill('red'); strokeWeight(2); super.draw();}
+	draw()
+	{
+		fill('red');
+		strokeWeight(2);
+		super.draw();
+	}
 }
