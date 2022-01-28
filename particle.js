@@ -4,7 +4,10 @@
 // No Instance of a particle should occur
 class Particle{
     static drawText = false;
-	constructor(posX, posY){
+    static max_Vel = 20;
+    static min_Vel = 10;
+	constructor(posX, posY)
+	{
 		// every particle has position and velocity as well as a type and mass
 		this.posX=posX;
 		this.posY=posY;
@@ -16,43 +19,59 @@ class Particle{
 	mass(){ return 10;}
 	
 	// setter function for velocity
-	setVel(x,y){
+	setVel(x,y)
+	{
 		this.velX=x;
 		this.velY=y;
 	}
 	// sett random velocity with magnitude speed
-	setRandVel(speed){
+	setRandVel()
+	{
+		let speed = random(Particle.min_Vel, Particle.max_Vel);
 		let theta = random(0,360);
 		this.velX=speed*cos(theta);
 		this.velY=speed*sin(theta);
-		
 	}
+	
 	// used to add many particles at a time
-	static addParticles(type,num,side,list){
+	static addParticles(type,num,side,list)
+	{
         // If the number of particles is being increased
-		if (num>0){
+		if (num>0)
+		{
 		    // for each particle to be added...
-			for (let pind=0;pind<int(num);pind++){
-			    // create a particle...
+			for (let pind=0;pind<int(num);pind++)
+			{
 				let p;
-				// with a random velocity
 				let posX,posY;
 				// top and bottom quadrants do not need to be checked
-				posY = random(0,height);
 				// set x postion depending on the side of the membrane
-				switch (side){
-					case 'l': posX = random(0,width/2-100); break;
-					case 'r': posX = random(width/2+100,width); break;
-					default: posX = random(0,width);
+				switch (side)
+				{
+					// TODO: fix bug if mass > 30
+					case 'l': 
+						posX = random(30,width/2-100); break;
+					case 'r':
+						posX = random(width/2+100,width-30); break;
+					default:
+						posX = random(100,width);
 				}
 				// set type of the particle depending on the type parameter
-				switch (type){
-					case 's':p = new Salt(posX,posY);break;
-					case 'w':p = new Water(posX,posY);break;
-					default:p = new Particle(posX,posY);
+				switch (type)
+				{
+					case 's':
+						posY = random(Salt.sMass, height-Salt.sMass);
+						p = new Salt(posX,posY);
+						break;
+					case 'w':
+						posY = random(Water.sMass, height-Water.sMass);
+						p = new Water(posX,posY);
+						break;
+					default:
+						p = new Particle(posX,posY);
 				}
 				// set the particle to a random velocity
-				p.setRandVel(random(2,5));
+				p.setRandVel();
 				// push the new particle to the list passed in by reference so it is added
 				list.push(p);
 			}
@@ -62,7 +81,8 @@ class Particle{
 			// for each particle to be removed
 			let n=0;let i=0;
 			// while the number of particles removed is less than the number of particles to be removed and the index of particle is less than the total number of particles
-			while(n<-num && i<list.length){
+			while(n<-num && i<list.length)
+			{
 				// get the particle at the index
 				let p = list[i];
 				// check if it is in the correct area of the screen
@@ -90,9 +110,11 @@ class Particle{
 	}
 	
 	
-	draw(){
+	draw()
+	{
 	    circle(this.posX, this.posY, 2*this.mass());
-	    if (Particle.drawText){
+	    if (Particle.drawText)
+	    {
 	        fill(0);
 		    textAlign(LEFT);
 		    textSize(20);
@@ -100,38 +122,36 @@ class Particle{
 	    }
 	}
 	
-	update(){
-		// checks bounds then moves particle
-		if (this.posX + this.velX< 0){
+	update()
+	{
+		// checks if the particle's position next frame will be out of bounds
+		if (this.posX + this.velX*deltaTime/100< this.mass())
 			this.velX *= -1;
-			//this.posX = this.mass();
-		}
-		if (this.posX + this.velX > width){
+
+		if (this.posX + this.velX*deltaTime/100 > width-this.mass())
 			this.velX *= -1;
-			//this.posX = width-this.mass();
-		}
-		if (this.posY + this.velX < 0){
-			this.velY *= -1;
-			//this.posY = this.mass();
-		}
-		if (this.posY + this.velY > height){
-			this.velY *= -1;
-			//this.posY = height-this.mass();
-		}
+
 		
-		this.posX += this.velX;
-		this.posY += this.velY;
+		if (this.posY + this.velX*deltaTime/100 < this.mass())
+			this.velY *= -1;
+		
+		if (this.posY + this.velY*deltaTime/100 > height-this.mass())
+			this.velY *= -1;
+		
+		this.posX += this.velX*deltaTime/100;
+		this.posY += this.velY*deltaTime/100;
 	}
 	// particle collide with particle
-	// membrane.collide handles collisions with membranes
-	// should be well optimised so having to check the other particle is not necessary but not really an issue
+	// membrane.collide handles collisions between particles and membranes
 	
 	collide(other){
-	
+		
 		let dis_sqrd = pow(this.posX-other.posX,2)+pow(this.posY-other.posY,2);
 		
 		// if next frame, the particles are colliding
-		if ( pow(this.posX+this.velX-other.posX-other.velX,2)+pow(this.posY+this.velX-other.posY-other.velY,2) < pow(this.mass()+other.mass(),2)){
+		// minimal computation if the particles are not colliding
+		if ( pow(this.posX+this.velX*deltaTime/100 - other.posX-other.velX*deltaTime/100,2) + pow(this.posY+this.velX*deltaTime/100-other.posY-other.velY*deltaTime/100,2) < pow(this.mass()+other.mass(),2))
+		{
 			
 			let mag_vel = sqrt(pow(this.velX,2)+pow(this.velY,2));
 			
@@ -150,7 +170,8 @@ class Particle{
 
 			// I dont need to calculate new positions if the particles aren't intersecting
 			// If the particles are intersecting (they spawned colliding), then move the particles away from each other
-			if ( pow(this.posX-other.posX,2)+pow(this.posY-other.posY,2) < pow(this.mass()+other.mass(),2)){
+			if ( pow(this.posX-other.posX,2)+pow(this.posY-other.posY,2) < pow(this.mass()+other.mass(),2))
+			{
 				// sort out position stuff
 				// find distance one particle has to be moved
 				let distance_to_be_moved = ((this.mass()+other.mass())-sqrt(dis_sqrd))/2;
@@ -178,12 +199,12 @@ class Water extends Particle{
 	constructor(posX,posY){super(posX,posY);this.type='w';}
 	mass(){return Water.sMass;}
 	// draw blue circle
-	draw(){fill('blue'); super.draw();}
+	draw(){fill('blue'); strokeWeight(2); super.draw();}
 }
 class Salt extends Particle{
 	static sMass=30;
 	constructor(posX,posY){super(posX,posY);this.type='s';}
 	mass(){return Salt.sMass;}
 	// draw red circle
-	draw(){ fill('red'); super.draw();}
+	draw(){ fill('red'); strokeWeight(2); super.draw();}
 }

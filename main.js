@@ -1,22 +1,22 @@
-// setup p5 variables
+// Setup p5 variables.
 p5.disableFriendlyErrors = true;
 
 
-// every part of the program needs to access the model, to load/ unload so it makes sense for it to be defined globally.
+// Every part of the program needs to access the model, to load/ unload so it makes sense for it to be defined globally.
 let model; // type Model
 
-// I try to make the main file as clean as possible, so if I wanted to create a new model it would not be difficult.
+// Keeping the main program clean is good so that new models could be made easily.
 function setup()
 {
     textAlign(LEFT);
 	createCanvas(windowWidth, windowHeight);
 	//background(200);
 	//frameRate(30);
-	// in this example, Menu is being displayed first
+	// Menu is being displayed first
 	model = new Menu();
 }
 
-// p5 function that gets called every frame
+// p5 function that gets called every frame.
 function draw()
 {
 	background(204);

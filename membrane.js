@@ -1,9 +1,11 @@
+// each rectangle of the membrane needs its own collision, drawing and properties
 class Rect{
 	constructor(x,y,w,h){this.x=x;this.y=y;this.w=w;this.h=h;}
 	
 	draw(){rect(this.x,this.y,this.w,this.h);}
 	
-	collide(other){
+	collide(other)
+	{
 
 		/*
 		create a larger rectangle
@@ -24,8 +26,8 @@ class Rect{
 		*/
 		let pX=other.posX;
 		let pY= other.posY;
-		let vY = other.velY;
-		let vX = other.velX;
+		let vY = other.velY*deltaTime/100;
+		let vX = other.velX*deltaTime/100;
 		
 		
 		let X = this.x-other.mass();
@@ -90,10 +92,8 @@ class Rect{
 			*/
 			// check left side
 			let l = ((X-pX)/vX);
-			
-			if ( Y < pY + l * vY && (Y+H) > pY + l * vY && abs(l) < 1){
+			if ( Y < pY + l * vY && (Y+H) > pY + l * vY && abs(l) < 1)
 				other.velX *=-1;
-			}
 			// check right side
 			l = (((X+W)-pX)/vX);
 			if ( Y < pY + l*vY && (Y+H) > pY + l*vY && abs(l) < 1){
@@ -101,22 +101,20 @@ class Rect{
 			}
 			// check top
 			l = ((Y-pY)/vY);
-			if (X < pX + l*vX && (X+W) > pX + l * vX && abs(l) < 1) {
+			if (X < pX + l*vX && (X+W) > pX + l * vX && abs(l) < 1)
 				other.velY *=-1;
-			}
+			
 			// check bottom
 			l = (((Y+H)-pY)/vY);
-			if( X < pX + l*vX && (X + W) > pX + l*vX && abs(l) < 1){				
+			if( X < pX + l*vX && (X + W) > pX + l*vX && abs(l) < 1)			
 				other.velY *=-1;
-			}
 			
 			if ( pX > X && pX < X + W && pY > Y && pY < Y + H ){
-			    if (vX>0){
+			    if (vX>0)
 			        this.posX = X;
-			    }
-			    else{
+			    
+			    else
 			        this.posX = X+W;
-			    }
 			}
 		}
 	}
@@ -141,6 +139,7 @@ class Membrane{
 	draw(){
 		// draw individual rectangles
 		fill('purple');
+		strokeWeight(2)
 		for (const r of this.rects){
 			r.draw();
 		}
@@ -191,7 +190,7 @@ class CircularMembrane{
 		// if particle is inside membrane edge
 		let is_inside = pow(pX-this.x,2) + pow(pY-this.y,2) < pow(this.rad,2);
 
-		let is_inside_next_frame = pow(pX+vX-this.x,2) + pow(pY+vY-this.y,2) < pow(this.rad,2);
+		let is_inside_next_frame = pow(pX+vX*deltaTime/100-this.x,2) + pow(pY+vY*deltaTime/100-this.y,2) < pow(this.rad,2);
 
 		if((is_inside && !is_inside_next_frame) ||(!is_inside && is_inside_next_frame)){
 		// if the partcle is water

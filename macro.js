@@ -3,17 +3,22 @@ class Macro extends Model
 {
 	constructor(type)
 	{
-		// call Model.constructor()
+		// Call Model.constructor() to setup the controller and reset paused.
 		super();
-		// A macro model has a list of particles and a list of Membranes, as well as an image that gets updated every frame
+		// A macro model has a list of particles and a list of Membranes, as well as an image that gets updated every frame with a scale value.
 		this.particles = [];
 		this.membranes=[];
 		
+		// image does not have to initialised since the scale value changes first frame and gets set.
 		this.image;
-		this.scale = -1;
+		this.scale = 0;
 		
 		Particle.drawText=false;
-
+		Water.sMass=0;
+		Salt.sMass=0;
+		
+		
+		// More initial conditions could be set
 		switch (type)
 		{
 			case 'split':
@@ -26,14 +31,16 @@ class Macro extends Model
 		}
 		
 
-		// add a large membrane
+		// Add a large membrane
 		this.membranes.push(new CircularMembrane(3*width/4, height/2, 200, 5));
-		// add a small membrane
+		
+		// Add a smaller membrane
 		this.membranes.push(new CircularMembrane(width/4, height/4, 100, 2));
+		
 		// add sliders and buttons for the user to interact with
 		// go back to the menu
 		this.control.addButton('menu_button',"Menu",load_menu, 350,height-230);
-		// reset the model-> remove all particles
+		// reset the model-> remove all particles and membranes
 		this.control.addButton('reset_button',"Reset", reset, 350,height-190);
 		// add a scale slider to edit the visuals/ make program run faster
 		this.control.addSlider('scale_slider', 'Scale Slider',0,4,2,50,height-70);
@@ -49,13 +56,16 @@ class Macro extends Model
 		let scale_val = this.control.getVal('scale_slider');
 		// get scale value from slider
 		let scale = pow(2,scale_val);
+		// constant colour_palette with help from a (different) third party
 		const colour_palette = [ 250, 100, 30, 20, 5 ];
-		// if the scale has changed
+		
+		// This change improved the performance BY A LOT
 		if (scale_val != this.scale){
 			// reset the image
 			this.img = createImage(round(width/scale),round(height/scale));
-		// load pixels from created image
+			// load pixels from created image
 			this.img.loadPixels();
+			// set the scale so the image can be updated later
 			this.scale = scale_val;
 		}
 		
@@ -72,7 +82,7 @@ class Macro extends Model
 				this.img.pixels[index+3]=255;
 			}
 		}
-		// draw particles
+		// Draw Particles
 		for (const p of this.particles)
 		{
 
@@ -85,11 +95,6 @@ class Macro extends Model
 			index = index-temp;
 			// change different rgb value for type of particle
 			if(p.type=='w'){
-			// scale 4: col 5-8
-			// scale 3: col 15-25
-			// scale 2: col 25-36
-			// scale 1: col 80-120
-			// scale 0: col 200-255
 				this.img.pixels[index+0]-= colour_palette[scale_val];
 				this.img.pixels[index+1]-= colour_palette[scale_val];
 
@@ -98,13 +103,13 @@ class Macro extends Model
 				this.img.pixels[index+1]-=colour_palette[scale_val];
 				this.img.pixels[index+2]-= colour_palette[scale_val];
 			}
-			// default red colour
+			// Default Red colour
 			else{
 				this.img.pixels[index+1]-= colour_palette[scale_val];
 				this.img.pixels[index+2]-= colour_palette[scale_val];
 			}
 		}
-		// update the pixels to the image I just loaded
+		// Update the pixels to the image that was loaded.
 		this.img.updatePixels();
 		image(this.img, 0,0,width,height);
 		for (const m of this.membranes)
@@ -112,7 +117,7 @@ class Macro extends Model
 			m.draw();
 		}
 		this.control.draw();
-		// draw text for keyboard input prompts
+		// Draw text for keyboard input prompts
 		fill(0);
 		textSize(20);
 		
@@ -122,12 +127,14 @@ class Macro extends Model
 		text('Hold "W" to draw water particles at mouse cursor', 50, height -100);
 	}
 	
-	update(){
+	update()
+	{
+		// Check for user input
 		if (keyIsPressed)
 		{
 			if (key == 'w')
 			{
-				// get currently used particles
+				// Add water particles to the screen
 				let rad = this.control.getVal('drawing_radius');
 				let num = 2*rad;
 				
@@ -135,37 +142,41 @@ class Macro extends Model
 				{
 					let p;
 					p = new Water(mouseX + random(-rad, rad), mouseY+ random(-rad, rad));
-					p.setRandVel(1);
+					p.setRandVel();
 					this.particles.push(p);
 				}
 			}
 			if (key == 's')
 			{
-				// get currently used particles
+				// Add Salt particles to the screen
 				let rad = this.control.getVal('drawing_radius');
 				let num = 2*rad
 				for (let i=0; i<num; i++)
 				{
 					let p;
 					p = new Salt(mouseX + random(-rad, rad), mouseY+ random(-rad, rad));
-					p.setRandVel(1);
+					p.setRandVel();
 					this.particles.push(p);
 				}
 			}
 			
 		}
-		// allow creating particles but not moving particles
+		// Allow creating particles but not moving particles while paused
 		if (!this.paused)
 		{
 		// imitate collitions
 			if (this.particles.length>0)
 			{
+				// Number of particles collided per frame = number of particles/200
+				
 				let num = int(random(0,this.particles.length/200));
+				
 				for (let i=0; i<num;i++)
 				{
+					// Select a random particle's index
 					const randIndex = int(random(0, this.particles.length));
-
-					this.particles[randIndex].setRandVel(random(1,2));
+					// move the particle in a random velocity
+					this.particles[randIndex].setRandVel();
 				}
 			}
 		// update every particle
