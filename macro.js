@@ -60,7 +60,8 @@ class Macro extends Model
 		const colour_palette = [ 250, 100, 30, 20, 5 ];
 		
 		// This change improved the performance BY A LOT
-		if (scale_val != this.scale){
+		if (scale_val != this.scale)
+		{
 			// reset the image
 			this.img = createImage(round(width/scale),round(height/scale));
 			// load pixels from created image
@@ -94,17 +95,20 @@ class Macro extends Model
 			// find black pixel for that index of pixel
 			index = index-temp;
 			// change different rgb value for type of particle
-			if(p.type=='w'){
+			if(p.type=='w')
+			{
 				this.img.pixels[index+0]-= colour_palette[scale_val];
 				this.img.pixels[index+1]-= colour_palette[scale_val];
 
 			}
-			else if(p.type=='s'){
+			else if(p.type=='s')
+			{
 				this.img.pixels[index+1]-=colour_palette[scale_val];
 				this.img.pixels[index+2]-= colour_palette[scale_val];
 			}
 			// Default Red colour
-			else{
+			else
+			{
 				this.img.pixels[index+1]-= colour_palette[scale_val];
 				this.img.pixels[index+2]-= colour_palette[scale_val];
 			}

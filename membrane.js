@@ -1,5 +1,6 @@
 // each rectangle of the membrane needs its own collision, drawing and properties
-class Rect{
+class Rect
+{
 	constructor(x,y,w,h){this.x=x;this.y=y;this.w=w;this.h=h;}
 	
 	draw(){rect(this.x,this.y,this.w,this.h);}
@@ -36,7 +37,8 @@ class Rect{
 		let H = this.h+other.mass()*2;
 
 		// check if the particle is colliding next frame
-		if ( pX+vX > X && pX+vX < X + W && pY+vY > Y && pY+vY < Y + H ){
+		if ( pX+vX > X && pX+vX < X + W && pY+vY > Y && pY+vY < Y + H )
+		{
 			
 			
 		
@@ -96,9 +98,9 @@ class Rect{
 				other.velX *=-1;
 			// check right side
 			l = (((X+W)-pX)/vX);
-			if ( Y < pY + l*vY && (Y+H) > pY + l*vY && abs(l) < 1){
+			if ( Y < pY + l*vY && (Y+H) > pY + l*vY && abs(l) < 1)
 				other.velX *=-1;
-			}
+			
 			// check top
 			l = ((Y-pY)/vY);
 			if (X < pX + l*vX && (X+W) > pX + l * vX && abs(l) < 1)
@@ -109,7 +111,8 @@ class Rect{
 			if( X < pX + l*vX && (X + W) > pX + l*vX && abs(l) < 1)			
 				other.velY *=-1;
 			
-			if ( pX > X && pX < X + W && pY > Y && pY < Y + H ){
+			if ( pX > X && pX < X + W && pY > Y && pY < Y + H )
+			{
 			    if (vX>0)
 			        this.posX = X;
 			    
@@ -121,33 +124,40 @@ class Rect{
 }
 
 class Membrane{
-	constructor(num, gap, rect_width){
+	constructor(num, gap, rect_width)
+	{
 		// a membrane contains a list of rectangles that the particles can collide with
 		this.rects = [];
 		// calculate the position and height of each rectangle
 		let height_rect = (height-(num-1)*gap)/num;
-		if (height_rect>1){
+		if (height_rect>1)
+		{
 			let tlx=(width/2)-(rect_width/2);
 			let tly=0;
 
-			for (let n=0;n<num; n++){
+			for (let n=0;n<num; n++)
+			{
 				this.rects[n] = new Rect(tlx, tly, rect_width, height_rect);
 				tly= tly + height_rect + gap;
 			}
 		}
 	}
-	draw(){
+	draw()
+	{
 		// draw individual rectangles
 		fill('purple');
 		strokeWeight(2)
-		for (const r of this.rects){
+		for (const r of this.rects)
+		{
 			r.draw();
 		}
 	}
 	
 	// membrane collides with particle
-	collide(other){
-		for (const r of this.rects){
+	collide(other)
+	{
+		for (const r of this.rects)
+		{
 			r.collide(other);
 		}
 	}
@@ -155,12 +165,19 @@ class Membrane{
 
 
 
-class CircularMembrane{
+class CircularMembrane
+{
 	constructor(x,y, rad, edge){this.x=x;this.y=y,this.rad=rad; this.edge= edge;}
 	
-	draw(){fill(color(0,0,0,0));strokeWeight(this.edge);circle(this.x, this.y, this.rad*2);}
+	draw()
+	{
+		fill(color(0,0,0,0));
+		strokeWeight(this.edge);
+		circle(this.x, this.y, this.rad*2);
+	}
 	
-	reflect(other){
+	reflect(other)
+	{
 		let pX=other.posX; let pY=other.posY;
 		let vY = other.velY; let vX = other.velX;
 		// create normal vector from the centre of the circle to the particle
@@ -184,7 +201,8 @@ class CircularMembrane{
 
 	}
 	
-	collide(other){
+	collide(other)
+	{
 		let pX=other.posX; let pY=other.posY;
 		let vY = other.velY; let vX = other.velX;
 		// if particle is inside membrane edge
@@ -192,16 +210,20 @@ class CircularMembrane{
 
 		let is_inside_next_frame = pow(pX+vX*deltaTime/100-this.x,2) + pow(pY+vY*deltaTime/100-this.y,2) < pow(this.rad,2);
 
-		if((is_inside && !is_inside_next_frame) ||(!is_inside && is_inside_next_frame)){
+		if((is_inside && !is_inside_next_frame) ||(!is_inside && is_inside_next_frame))
+		{
 		// if the partcle is water
-			if (other.type == 'w'){
+			if (other.type == 'w')
+			{
 				// then there is a probability of passing through the membrane
 				// if the particle is reflected
-				if (int(random(0,10))!=1){
+				if (int(random(0,10))!=1)
+				{
 					this.reflect(other);
 				}
 			}
-			else if (other.type == 's'){
+			else if (other.type == 's')
+			{
 				// always reflect salt particles
 				this.reflect(other);
 			

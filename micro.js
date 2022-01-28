@@ -163,7 +163,8 @@ class Micro extends Model
 	{
 		// Remove all particles
 		let len = this.particles.length;
-		for (let i=0; i<len;i++){
+		for (let i=0; i<len;i++)
+		{
 			this.particles.pop();
 		}
 		
@@ -172,7 +173,8 @@ class Micro extends Model
 	draw()
 	{
 	// Draw each particle in particles
-		for (const p of this.particles){
+		for (const p of this.particles)
+		{
 			p.draw();
 		}
 	// Draw membrane
