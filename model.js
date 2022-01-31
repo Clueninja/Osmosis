@@ -61,8 +61,8 @@ class controller
 		textSize(12);
 		for (const s of this.sliders)
 		{
-			text(s.string,s.posX,s.posY-8,120);
-			text(s.slider.value(),s.posX+140,s.posY,10);
+			text(s.string,s.posX,s.posY-10,140);
+			text(s.slider.value(),s.posX+160,s.posY-10,10);
 		}
 	}
 	

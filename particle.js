@@ -139,6 +139,21 @@ class Particle
 		if (this.posY + this.velY*deltaTime/100 > height-this.mass())
 			this.velY *= -1;
 		
+		// check if the particle is intersecting with the wall in the current frame
+		// should only happen if the particle is intersecting at creation or a collision with another particle moved it into the wall
+		
+		if (this.posX<this.mass())
+			this.posX= this.mass();
+		
+		if (this.posX > width-this.mass())
+			this.posX = width-this.mass();
+		
+		if (this.posY<this.mass())
+			this.posY= this.mass();
+		
+		if (this.posY> height-this.mass())
+			this.posY = height-this.mass();
+		
 		this.posX += this.velX*deltaTime/100;
 		this.posY += this.velY*deltaTime/100;
 	}

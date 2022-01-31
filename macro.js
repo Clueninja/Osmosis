@@ -39,15 +39,15 @@ class Macro extends Model
 		
 		// add sliders and buttons for the user to interact with
 		// go back to the menu
-		this.control.addButton('menu_button',"Menu",load_menu, 350,height-230);
+		this.control.addButton('menu_button',"Menu",load_menu, 400,height-230);
 		// reset the model-> remove all particles and membranes
-		this.control.addButton('reset_button',"Reset", reset, 350,height-190);
+		this.control.addButton('reset_button',"Reset", reset, 400,height-190);
 		// add a scale slider to edit the visuals/ make program run faster
 		this.control.addSlider('scale_slider', 'Scale Slider',0,4,2,50,height-70);
 
-		this.control.addSlider('drawing_radius', 'Drawing Slider',40,100,50,210,height-70);
+		this.control.addSlider('drawing_radius', 'Drawing Slider',40,100,50,250,height-70);
 
-		this.control.addSlider('draw_membrane_radius', 'Membrane Radius',100,300,150,370,height-70);
+		this.control.addSlider('draw_membrane_radius', 'Membrane Radius',100,300,150,450,height-70);
 
 	}
 	

@@ -10,7 +10,7 @@ class Rect
 
 		/*
 		create a larger rectangle
-		This means it is easier to calculate since I only need to consider a point and a rectangle rather than a circle and a rectangle
+		This means it is easier to calculate since only a point and a rectangle rather than a circle and a rectangle need to be considered
 		 _  _____________
 		/.\|			|
 		\_/|			|
@@ -110,7 +110,7 @@ class Rect
 			l = (((Y+H)-pY)/vY);
 			if( X < pX + l*vX && (X + W) > pX + l*vX && abs(l) < 1)			
 				other.velY *=-1;
-			
+			// really simple collision checking for if the particle and the rectangle are colliding
 			if ( pX > X && pX < X + W && pY > Y && pY < Y + H )
 			{
 			    if (vX>0)

@@ -44,20 +44,22 @@ class Micro extends Model
 				this.control.addSlider('membrane_gap_slider','Gap Between Rects', 1,100,55,width-200,110);
 				
 				break;
+			case 'default':
+						
+				this.control.addSlider('water_right_slider','Water Number Right', 0,300,0,width-200,height-150);
+				this.control.addSlider('salt_right_slider','Salt Number Right', 0,50,0,width-200,height-100);
+			
 				
+				this.control.addSlider('water_left_slider','Water Number Left', 0,300,0,100,height-150);
+				this.control.addSlider('salt_left_slider','Salt Number Left', 0,50,0,100,height-100);
+				break;
+					
 		}
 		// set control gui items like sliders and buttons to interact with
 		
 		this.control.addButton('menu_button', 'Menu',load_menu, 300,height-150);
 		this.control.addButton('reset_button', 'Reset',reset, 300,height-100);
 		
-		
-		this.control.addSlider('water_right_slider','Water Number Right', 0,300,0,width-200,height-150);
-		this.control.addSlider('salt_right_slider','Salt Number Right', 0,50,0,width-200,height-100);
-	
-		
-		this.control.addSlider('water_left_slider','Water Number Left', 0,300,0,100,height-150);
-		this.control.addSlider('salt_left_slider','Salt Number Left', 0,50,0,100,height-100);
 		
 		
 	}
@@ -231,7 +233,7 @@ function load_hyper()
 function load_micro()
 {
 	model.clear();
-	model = new Micro();
+	model = new Micro('default');
 }
 function load_advmicro()
 {
