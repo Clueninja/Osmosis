@@ -24,6 +24,7 @@ function draw()
 	model.draw();
 }
 
+// reset button calls this function to reset the current model.
 function reset()
 {
 	model.reset();

@@ -15,15 +15,18 @@ class Micro extends Model
 		Salt.sMass=30;
 		switch (type)
 		{
+			// equal number of particles on either side
 			case 'isotonic':
 				// Particles spawned on left							Particles spawned on right
 				Particle.addParticles('w', 150,'l',this.particles);		Particle.addParticles('w', 150,'r',this.particles);
 				Particle.addParticles('s', 10,'l',this.particles);		Particle.addParticles('s', 10,'r',this.particles);
 				break;
+			//more salt particles on the right side and more water particles on the left side
 			case 'hypertonic':
 				Particle.addParticles('w', 300,'l',this.particles);		Particle.addParticles('w', 20,'r',this.particles);
 				Particle.addParticles('s', 2,'l',this.particles);		Particle.addParticles('s', 30,'r',this.particles);
 				break;
+			// same number of salt and water particles on the left side, more water particles on the right side
 			case 'hypotonic':
 				Particle.addParticles('w', 20,'l',this.particles);		Particle.addParticles('w', 300,'r',this.particles);
 				Particle.addParticles('s', 20,'l',this.particles);		Particle.addParticles('s', 2,'r',this.particles);
@@ -45,17 +48,20 @@ class Micro extends Model
 				
 				break;
 			case 'default':
-						
-				this.control.addSlider('water_right_slider','Water Number Right', 0,300,0,width-200,height-150);
-				this.control.addSlider('salt_right_slider','Salt Number Right', 0,50,0,width-200,height-100);
+				// if the default model is loaded
+				// set water and salt sliders for either side
+				// water and salt sliders for right hand side
+				this.control.addSlider('water_right_slider','Water Number Right', 0,150,0,width-200,height-150);
+				this.control.addSlider('salt_right_slider','Salt Number Right', 0,40,0,width-200,height-100);
 			
-				
-				this.control.addSlider('water_left_slider','Water Number Left', 0,300,0,100,height-150);
-				this.control.addSlider('salt_left_slider','Salt Number Left', 0,50,0,100,height-100);
+				// water and salt particles for left hand side
+				this.control.addSlider('water_left_slider','Water Number Left', 0,150,0,100,height-150);
+				this.control.addSlider('salt_left_slider','Salt Number Left', 0,40,0,100,height-100);
 				break;
 					
 		}
-		// set control gui items like sliders and buttons to interact with
+		
+		// add return to menu and reset buttons
 		
 		this.control.addButton('menu_button', 'Menu',load_menu, 300,height-150);
 		this.control.addButton('reset_button', 'Reset',reset, 300,height-100);
