@@ -46,6 +46,15 @@ class Micro extends Model
 				this.control.addSlider('membrane_num_slider','Number Of Rects', 2,20,10,width-200,80);
 				this.control.addSlider('membrane_gap_slider','Gap Between Rects', 1,100,55,width-200,110);
 				
+				// set water and salt sliders for either side
+				// water and salt sliders for right hand side
+				this.control.addSlider('water_right_slider','Water Number Right', 0,150,0,width-200,height-150);
+				this.control.addSlider('salt_right_slider','Salt Number Right', 0,40,0,width-200,height-100);
+			
+				// water and salt particles for left hand side
+				this.control.addSlider('water_left_slider','Water Number Left', 0,150,0,100,height-150);
+				this.control.addSlider('salt_left_slider','Salt Number Left', 0,40,0,100,height-100);
+				
 				break;
 			case 'default':
 				// if the default model is loaded
