@@ -130,7 +130,7 @@ class Membrane{
 		this.rects = [];
 		// calculate the position and height of each rectangle
 		let height_rect = (height-(num-1)*gap)/num;
-		if (height_rect>1)
+		if (height_rect>1 || gap <100)
 		{
 			let tlx=(width/2)-(rect_width/2);
 			let tly=0;

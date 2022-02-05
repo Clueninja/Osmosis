@@ -44,8 +44,8 @@ class Micro extends Model
 				
 				// Setup sliders for membrane dimensions
 				this.control.addSlider('membrane_width_slider','Membrane Width', 10,100,30,width-200,50);
-				this.control.addSlider('membrane_num_slider','Number Of Rects', 2,20,10,width-200,80);
-				this.control.addSlider('membrane_gap_slider','Gap Between Rects', 1,100,55,width-200,110);
+				this.control.addSlider('membrane_num_slider','Number Of Segments', 2,20,10,width-200,80);
+				this.control.addSlider('membrane_gap_slider','Gap Between Segments', 1,100,55,width-200,110);
 				
 				// set water and salt sliders for either side
 				// water and salt sliders for right hand side
@@ -126,6 +126,8 @@ class Micro extends Model
 		let left_salt =0;
 		let right_water =0;
 		let right_salt=0;
+		let left_vel=0;
+		let right_vel =0;
 		for (const p of this.particles)
 		{
 			if (p.posX<width/2)
@@ -136,6 +138,7 @@ class Micro extends Model
 					case 'w': left_water++;break;
 					case 's': left_salt++;break;
 				}
+				left_vel+= sqrt(pow(p.velX, 2)+ pow(p.velY,2));
 			}
 			else
 			{
@@ -144,16 +147,20 @@ class Micro extends Model
 					case 'w': right_water++;break;
 					case 's': right_salt++;break;
 				}
+				right_vel+= sqrt(pow(p.velX, 2)+ pow(p.velY,2));
 			}
 		}
 		// draw number of particles on either side
 		fill('blue');
 		textSize(40);
-		text(left_water, width/4,50);
-		text(right_water, 3*width/4,50);
+		text(left_water, width/4,50);			text(right_water, 3*width/4,50);
+		
 		fill('red');
-		text(left_salt, width/4,100);
-		text(right_salt, 3*width/4,100);
+		text(left_salt, width/4,100);			text(right_salt, 3*width/4,100);
+		
+		fill('black');
+		text('Average Speed', width/4 -400, 50);		text('Average Speed', 3*width/4 -400, 50);
+		text(round(left_vel/(left_salt+left_water), 0), width/4-200,100 );		text(round(right_vel/(right_salt+right_water),0), 3*width/4-200,100 );
 	}
 	
 	
@@ -240,6 +247,7 @@ function reset_membrane()
 		10,
 	);
 }
+
 
 // For these it is required as models need to be loaded from outside the model, at least in this paradigm.
 
