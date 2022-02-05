@@ -7,7 +7,7 @@ class Particle
     static drawText = false;
     static max_Vel = 20;
     static min_Vel = 10;
-    static attractive_force = 10;
+    static attractive_force = 1500;
 	constructor(posX, posY)
 	{
 		// every particle has position and velocity as well as a type and mass
@@ -203,7 +203,7 @@ class Particle
 				other.posY = distance_to_be_moved * (otherposY-thisposY)/sqrt(dis_sqrd)+otherposY;
 			}
 		}
-		else if (this.type == 'w' && other.type == 's')
+		if (this.type == 'w' && other.type == 's')
 		{
 
 			let multiplier = Particle.attractive_force/dis_sqrd;

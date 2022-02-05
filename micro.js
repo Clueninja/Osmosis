@@ -56,7 +56,7 @@ class Micro extends Model
 				this.control.addSlider('salt_left_slider','Salt Number Left', 0,40,0,100,height-100);
 				
 				
-				this.control.addSlider('attractive_force','Attractive Force', 0,1000,10,100,height-50);
+				this.control.addSlider('attractive_force','Attractive Force', 0,10000,1500,100,height-50);
 				
 				break;
 			case 'default':
@@ -112,7 +112,7 @@ class Micro extends Model
 		mass =this.control.getVal('salt_mass_slider');
 		if (mass != null)
 			Salt.sMass = mass;
-		mass =this.control.getVal('attactive_force');
+		mass =this.control.getVal('attractive_force');
 		if (mass != null)
 			Particle.attractive_force = mass;
 	}
