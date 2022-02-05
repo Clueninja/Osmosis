@@ -196,11 +196,13 @@ class Macro extends Model
 	}
 	reset()
 	{
+		// remove all particles
 		let len = this.particles.length;
 		for (let ind=0; ind<len; ind++)
 		{
 			this.particles.pop();
 		}
+		// remove all membranes
 		len = this.membranes.length;
 		for (let ind=0; ind<len; ind++)
 		{

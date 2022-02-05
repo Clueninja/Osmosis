@@ -6,7 +6,6 @@
 
 // object that stores the id and p5.slider of a slider
 // this is useful since a list of p5 sliders cannot distinguish between each of them
-// hence I would have to define each slider as a variable in the model which would be a pain to manage
 class slider
 {
 	constructor(id, string, min,max,def,x, y)
@@ -111,6 +110,7 @@ class controller
 	
 	clear()
 	{
+		// remove all sliders and buttons
 		for (const s of this.sliders)
 		{
 			s.slider.remove();
@@ -154,7 +154,7 @@ function keyPressed()
 	{
 		Particle.drawText = !Particle.drawText;
 	}
-	// yes
+	// if the key m is being pressed and the model is a macro class
 	if (key == 'm' && model instanceof Macro)
 	{
 		let rad = model.control.getVal('draw_membrane_radius');

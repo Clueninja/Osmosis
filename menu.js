@@ -5,10 +5,11 @@ class Menu extends Model
 	constructor()
 	{
 		super();
-		
-		// Add the buttons so the user can control which model to be loaded
+		// start x position
 		let s=100;
+		// gap width
 		let g = 25;
+		// Add the buttons so the user can control which model to be loaded
 		this.control.addButton('micro_model',"Micro Model",load_micro, 100,s);
 		this.control.addButton('isotonic',"Load Isotonic Solution",load_iso, 100,s+g);
 		this.control.addButton('hypotonic',"Load Hypotonic Solution",load_hypo, 100,s+2*g);

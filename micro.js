@@ -123,6 +123,7 @@ class Micro extends Model
 		{
 			if (p.posX<width/2)
 			{
+				// if the particles are on the left hand side
 				switch (p.type)
 				{
 					case 'w': left_water++;break;
