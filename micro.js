@@ -39,7 +39,8 @@ class Micro extends Model
 				this.control.addSlider('salt_mass_slider','Salt Mass', 10,40,30,width/2+200,height-100);
 				
 				// Set reset Membrane button
-				this.control.addButton('reset_membrane_button', 'Reset Membrane',reset_membrane, width-200,130);
+				this.control.addButton('load_membrane_button', 'Load Membrane',load_membrane, width-200,130);
+				this.control.addButton('reset_membrane_button', 'Reset Membrane',reset_membrane, width-200,155);
 				
 				// Setup sliders for membrane dimensions
 				this.control.addSlider('membrane_width_slider','Membrane Width', 10,100,30,width-200,50);
@@ -222,12 +223,21 @@ class Micro extends Model
 }
 // The button to reset membrane needs to be globally defined, so this function has undefined behaviour if called in the macro model.
 // (model.membrane is not defined)
-function reset_membrane()
+function load_membrane()
 {
 	model.membrane = new Membrane(
 		model.control.getVal('membrane_num_slider'),
 		model.control.getVal('membrane_gap_slider'),
-		model.control.getVal('membrane_width_slider')
+		model.control.getVal('membrane_width_slider'),
+	);
+}
+
+function reset_membrane()
+{
+	model.membrane = new Membrane(
+		10,
+		55,
+		10,
 	);
 }
 
