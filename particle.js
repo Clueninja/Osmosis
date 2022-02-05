@@ -7,6 +7,7 @@ class Particle
     static drawText = false;
     static max_Vel = 20;
     static min_Vel = 10;
+    static attractive_force = 10;
 	constructor(posX, posY)
 	{
 		// every particle has position and velocity as well as a type and mass
@@ -194,13 +195,22 @@ class Particle
 				let distance_to_be_moved = ((this.mass()+other.mass())-sqrt(dis_sqrd))/2;
 				let thisposX = this.posX; let thisposY = this.posY; let otherposX = other.posX; let otherposY = other.posY;
 				
-				// do stuff I figured out using maths
+				// do stuff figured out using maths
 				this.posX = distance_to_be_moved * (thisposX-otherposX)/sqrt(dis_sqrd) +thisposX;
 				this.posY = distance_to_be_moved * (thisposY-otherposY)/sqrt(dis_sqrd)+thisposY;
 				
 				other.posX = distance_to_be_moved * (otherposX-thisposX)/sqrt(dis_sqrd) +otherposX;
 				other.posY = distance_to_be_moved * (otherposY-thisposY)/sqrt(dis_sqrd)+otherposY;
 			}
+		}
+		else if (this.type == 'w' && other.type == 's')
+		{
+
+			let multiplier = Particle.attractive_force/dis_sqrd;
+			let nX = (other.posX-this.posX)/sqrt(dis_sqrd);
+			let nY = (other.posY-this.posY)/sqrt(dis_sqrd);
+			this.velX += nX * multiplier;
+			this.velY += nY * multiplier;
 		}
 	}
 }
