@@ -26,7 +26,7 @@ class Particle
 		this.velX=x;
 		this.velY=y;
 	}
-	// sett random velocity with magnitude speed
+	// set random velocity with magnitude speed
 	setRandVel()
 	{
 		let speed = random(Particle.min_Vel, Particle.max_Vel);
@@ -209,8 +209,11 @@ class Particle
 			let multiplier = Particle.attractive_force/dis_sqrd;
 			let nX = (other.posX-this.posX)/sqrt(dis_sqrd);
 			let nY = (other.posY-this.posY)/sqrt(dis_sqrd);
-			this.velX += nX * multiplier;
-			this.velY += nY * multiplier;
+			this.velX += nX * multiplier / this.mass();
+			this.velY += nY * multiplier / this.mass();
+			
+			other.velX -= nX * multiplier / other.mass();
+			other.velY -= nY * multiplier / other.mass();
 		}
 	}
 }

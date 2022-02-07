@@ -9,6 +9,7 @@ class Micro extends Model
 		this.particles = [];
 		this.membrane = new Membrane(10,55,10);
 		Particle.drawText = false;
+		Particle.attractive_force = 1500;
 		// Starting initial conditions.
 		// Set static water and salt masses.
 		Water.sMass=5;
