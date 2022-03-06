@@ -116,7 +116,7 @@ class Micro extends Model
 			Salt.sMass = mass;
 		mass =this.control.getVal('attractive_force');
 		if (mass != null)
-			Particle.attractive_force = mass;
+			attractive_constant = mass;
 	}
 	
 	// Draws the particle count on the screen

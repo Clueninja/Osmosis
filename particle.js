@@ -7,7 +7,6 @@ class Particle
     static drawText = false;
     static max_Vel = 20;
     static min_Vel = 10;
-    static attractive_force = 1500;
 	constructor(posX, posY)
 	{
 		// every particle has position and velocity as well as a type and mass
@@ -19,6 +18,7 @@ class Particle
 	}
 	// to be overwritten by inherited particles
 	mass(){ return 10;}
+	charge(){return 0;}
 	
 	// setter function for velocity
 	setVel(x,y)
@@ -52,7 +52,7 @@ class Particle
 				{
 					// TODO: fix bug if mass > 30
 					case 'l': 
-						posX = random(,width/2-100); break;
+						posX = random(0,width/2-100); break;
 					case 'r':
 						posX = random(width/2+100,width-30); break;
 					default:
@@ -203,18 +203,17 @@ class Particle
 				other.posY = distance_to_be_moved * (otherposY-thisposY)/sqrt(dis_sqrd)+otherposY;
 			}
 		}
-		if (this.type == 'w' && other.type == 's')
-		{
-
-			let multiplier = Particle.attractive_force/dis_sqrd;
-			let nX = (other.posX-this.posX)/sqrt(dis_sqrd);
-			let nY = (other.posY-this.posY)/sqrt(dis_sqrd);
-			this.velX += nX * multiplier / this.mass();
-			this.velY += nY * multiplier / this.mass();
-			
-			other.velX -= nX * multiplier / other.mass();
-			other.velY -= nY * multiplier / other.mass();
+		else{
+	        let multiplier = attractive_constant * (other.charge() * this.charge())/dis_sqrd;
+	        let nX = (other.posX-this.posX)/sqrt(dis_sqrd);
+	        let nY = (other.posY-this.posY)/sqrt(dis_sqrd);
+	        this.velX -= nX * multiplier / this.mass();
+	        this.velY -= nY * multiplier / this.mass();
+	        
+	        other.velX += nX * multiplier / other.mass();
+	        other.velY += nY * multiplier / other.mass();
 		}
+		
 	}
 }
 // statically defined mass makes sense since all water particles have the same size/mass
@@ -222,12 +221,14 @@ class Particle
 class Water extends Particle
 {
 	static sMass=5;
+	static sCharge=-1/2;
 	constructor(posX,posY)
 	{
 		super(posX,posY);
 		this.type='w';
 	}
 	mass(){return Water.sMass;}
+	charge(){return Water.sCharge;}
 	// draw blue circle
 	draw()
 	{
@@ -239,12 +240,14 @@ class Water extends Particle
 class Salt extends Particle
 {
 	static sMass=30;
+	static sCharge = 1;
 	constructor(posX,posY)
 	{
 		super(posX,posY);
 		this.type='s';
 	}
 	mass(){return Salt.sMass;}
+	charge(){return Salt.sCharge;}
 	// draw red circle
 	draw()
 	{
