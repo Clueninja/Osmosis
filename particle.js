@@ -52,7 +52,7 @@ class Particle
 				{
 					// TODO: fix bug if mass > 30
 					case 'l': 
-						posX = random(30,width/2-100); break;
+						posX = random(,width/2-100); break;
 					case 'r':
 						posX = random(width/2+100,width-30); break;
 					default:

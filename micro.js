@@ -8,10 +8,12 @@ class Micro extends Model
 		// A micro model contains a list of Particle(s) (Water or Salt) and a Membrane.
 		this.particles = [];
 		this.membrane = new Membrane(10,55,10);
+		this.type = type;
 		Particle.drawText = false;
-		Particle.attractive_force = 1500;
+		Particle.attractive_force = 3000;
 		// Starting initial conditions.
 		// Set static water and salt masses.
+		
 		Water.sMass=5;
 		Salt.sMass=30;
 		switch (type)
@@ -24,12 +26,12 @@ class Micro extends Model
 				break;
 			//more salt particles on the right side and more water particles on the left side
 			case 'hypertonic':
-				Particle.addParticles('w', 300,'l',this.particles);		Particle.addParticles('w', 20,'r',this.particles);
+				Particle.addParticles('w', 150,'l',this.particles);		Particle.addParticles('w', 150,'r',this.particles);
 				Particle.addParticles('s', 2,'l',this.particles);		Particle.addParticles('s', 30,'r',this.particles);
 				break;
 			// same number of salt and water particles on the left side, more water particles on the right side
 			case 'hypotonic':
-				Particle.addParticles('w', 20,'l',this.particles);		Particle.addParticles('w', 300,'r',this.particles);
+				Particle.addParticles('w', 150,'l',this.particles);		Particle.addParticles('w', 150,'r',this.particles);
 				Particle.addParticles('s', 20,'l',this.particles);		Particle.addParticles('s', 2,'r',this.particles);
 				break;
 				
@@ -79,8 +81,6 @@ class Micro extends Model
 		
 		this.control.addButton('menu_button', 'Menu',load_menu, 300,height-150);
 		this.control.addButton('reset_button', 'Reset',reset, 300,height-100);
-		
-		
 		
 	}
 	
@@ -174,6 +174,7 @@ class Micro extends Model
 		{
 			// Perform collisions between each particle
 			// Big O Complexity of n^2
+			// better data structures could be used to make this faster
 			for (const a of this.particles)
 			{
 				for (const b of this.particles)
@@ -200,6 +201,7 @@ class Micro extends Model
 		{
 			this.particles.pop();
 		}
+		//*this = Model(this.type);
 		
 	}
 	
