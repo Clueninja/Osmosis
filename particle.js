@@ -7,7 +7,6 @@ class Particle
     static drawText = false;
     static max_Vel = 20;
     static min_Vel = 10;
-    static attractive_force = 1500;
 	constructor(posX, posY)
 	{
 		// every particle has position and velocity as well as a type and mass
@@ -15,10 +14,13 @@ class Particle
 		this.posY=posY;
 		this.velX=0;
 		this.velY=0;
+		this.forceX =0;
+		this.forceY=0;
 		this.type='p';
 	}
 	// to be overwritten by inherited particles
 	mass(){ return 10;}
+	charge(){return 0;}
 	
 	// setter function for velocity
 	setVel(x,y)
@@ -26,7 +28,7 @@ class Particle
 		this.velX=x;
 		this.velY=y;
 	}
-	// sett random velocity with magnitude speed
+	// set random velocity with magnitude speed
 	setRandVel()
 	{
 		let speed = random(Particle.min_Vel, Particle.max_Vel);
@@ -52,7 +54,7 @@ class Particle
 				{
 					// TODO: fix bug if mass > 30
 					case 'l': 
-						posX = random(30,width/2-100); break;
+						posX = random(0,width/2-100); break;
 					case 'r':
 						posX = random(width/2+100,width-30); break;
 					default:
@@ -126,6 +128,11 @@ class Particle
 	
 	update()
 	{
+	    this.velX+=this.forceX;
+		this.velY+=this.forceY;
+		this.forceX=0;
+		this.forceY=0;
+		
 		// checks if the particle's position next frame will be out of bounds
 		if (this.posX + this.velX*deltaTime/100< this.mass())
 			this.velX *= -1;
@@ -157,7 +164,19 @@ class Particle
 		
 		this.posX += this.velX*deltaTime/100;
 		this.posY += this.velY*deltaTime/100;
+		
 	}
+	
+	apply_forces(other)
+	{
+		let dis_sqrd = pow(this.posX-other.posX,2)+pow(this.posY-other.posY,2);
+	    let multiplier = attractive_constant * (other.charge() * this.charge())/dis_sqrd;
+        let nX = (other.posX-this.posX)/sqrt(dis_sqrd);
+        let nY = (other.posY-this.posY)/sqrt(dis_sqrd);
+        this.forceX -= nX * multiplier / this.mass();
+        this.forceY -= nY * multiplier / this.mass();
+	}
+	
 	// particle collide with particle
 	// membrane.collide handles collisions between particles and membranes
 	
@@ -203,15 +222,8 @@ class Particle
 				other.posY = distance_to_be_moved * (otherposY-thisposY)/sqrt(dis_sqrd)+otherposY;
 			}
 		}
-		if (this.type == 'w' && other.type == 's')
-		{
-
-			let multiplier = Particle.attractive_force/dis_sqrd;
-			let nX = (other.posX-this.posX)/sqrt(dis_sqrd);
-			let nY = (other.posY-this.posY)/sqrt(dis_sqrd);
-			this.velX += nX * multiplier;
-			this.velY += nY * multiplier;
-		}
+		
+		
 	}
 }
 // statically defined mass makes sense since all water particles have the same size/mass
@@ -219,12 +231,14 @@ class Particle
 class Water extends Particle
 {
 	static sMass=5;
+	static sCharge=-1;
 	constructor(posX,posY)
 	{
 		super(posX,posY);
 		this.type='w';
 	}
 	mass(){return Water.sMass;}
+	charge(){return Water.sCharge;}
 	// draw blue circle
 	draw()
 	{
@@ -236,12 +250,14 @@ class Water extends Particle
 class Salt extends Particle
 {
 	static sMass=30;
+	static sCharge = 6;
 	constructor(posX,posY)
 	{
 		super(posX,posY);
 		this.type='s';
 	}
 	mass(){return Salt.sMass;}
+	charge(){return Salt.sCharge;}
 	// draw red circle
 	draw()
 	{

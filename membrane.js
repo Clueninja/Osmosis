@@ -92,6 +92,17 @@ class Rect
 	  
 			
 			*/
+			
+			if ( pX > X && pX < X + W && pY > Y && pY < Y + H )
+			{
+			    if (vX>0)
+			        this.posX = X;
+			    
+			    else
+			        this.posX = X+W;
+			}
+			
+			
 			// check left side
 			let l = ((X-pX)/vX);
 			if ( Y < pY + l * vY && (Y+H) > pY + l * vY && abs(l) < 1)
@@ -111,14 +122,7 @@ class Rect
 			if( X < pX + l*vX && (X + W) > pX + l*vX && abs(l) < 1)			
 				other.velY *=-1;
 			// really simple collision checking for if the particle and the rectangle are colliding
-			if ( pX > X && pX < X + W && pY > Y && pY < Y + H )
-			{
-			    if (vX>0)
-			        this.posX = X;
-			    
-			    else
-			        this.posX = X+W;
-			}
+			
 		}
 	}
 }
@@ -130,7 +134,7 @@ class Membrane{
 		this.rects = [];
 		// calculate the position and height of each rectangle
 		let height_rect = (height-(num-1)*gap)/num;
-		if (height_rect>1)
+		if (height_rect>1 || gap <100)
 		{
 			let tlx=(width/2)-(rect_width/2);
 			let tly=0;

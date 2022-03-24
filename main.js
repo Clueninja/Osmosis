@@ -4,6 +4,7 @@ p5.disableFriendlyErrors = true;
 
 // Every part of the program needs to access the model, to load/ unload so it makes sense for it to be defined globally.
 let model; // type Model
+let attractive_constant = 1500;
 
 // Keeping the main program clean is good so that new models could be made easily.
 function setup()

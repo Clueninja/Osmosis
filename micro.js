@@ -8,9 +8,12 @@ class Micro extends Model
 		// A micro model contains a list of Particle(s) (Water or Salt) and a Membrane.
 		this.particles = [];
 		this.membrane = new Membrane(10,55,10);
+		this.type = type;
 		Particle.drawText = false;
+		Particle.attractive_force = 3000;
 		// Starting initial conditions.
 		// Set static water and salt masses.
+		
 		Water.sMass=5;
 		Salt.sMass=30;
 		switch (type)
@@ -23,12 +26,12 @@ class Micro extends Model
 				break;
 			//more salt particles on the right side and more water particles on the left side
 			case 'hypertonic':
-				Particle.addParticles('w', 300,'l',this.particles);		Particle.addParticles('w', 20,'r',this.particles);
+				Particle.addParticles('w', 150,'l',this.particles);		Particle.addParticles('w', 150,'r',this.particles);
 				Particle.addParticles('s', 2,'l',this.particles);		Particle.addParticles('s', 30,'r',this.particles);
 				break;
 			// same number of salt and water particles on the left side, more water particles on the right side
 			case 'hypotonic':
-				Particle.addParticles('w', 20,'l',this.particles);		Particle.addParticles('w', 300,'r',this.particles);
+				Particle.addParticles('w', 150,'l',this.particles);		Particle.addParticles('w', 150,'r',this.particles);
 				Particle.addParticles('s', 20,'l',this.particles);		Particle.addParticles('s', 2,'r',this.particles);
 				break;
 				
@@ -44,8 +47,8 @@ class Micro extends Model
 				
 				// Setup sliders for membrane dimensions
 				this.control.addSlider('membrane_width_slider','Membrane Width', 10,100,30,width-200,50);
-				this.control.addSlider('membrane_num_slider','Number Of Rects', 2,20,10,width-200,80);
-				this.control.addSlider('membrane_gap_slider','Gap Between Rects', 1,100,55,width-200,110);
+				this.control.addSlider('membrane_num_slider','Number Of Segments', 2,20,10,width-200,80);
+				this.control.addSlider('membrane_gap_slider','Gap Between Segments', 1,100,55,width-200,110);
 				
 				// set water and salt sliders for either side
 				// water and salt sliders for right hand side
@@ -57,7 +60,7 @@ class Micro extends Model
 				this.control.addSlider('salt_left_slider','Salt Number Left', 0,40,0,100,height-100);
 				
 				
-				this.control.addSlider('attractive_force','Attractive Force', 0,10000,1500,100,height-50);
+				this.control.addSlider('attractive_force','Attractive Force', 0,5000,1500,100,height-50);
 				
 				break;
 			case 'default':
@@ -78,8 +81,6 @@ class Micro extends Model
 		
 		this.control.addButton('menu_button', 'Menu',load_menu, 300,height-150);
 		this.control.addButton('reset_button', 'Reset',reset, 300,height-100);
-		
-		
 		
 	}
 	
@@ -115,7 +116,7 @@ class Micro extends Model
 			Salt.sMass = mass;
 		mass =this.control.getVal('attractive_force');
 		if (mass != null)
-			Particle.attractive_force = mass;
+			attractive_constant = mass;
 	}
 	
 	// Draws the particle count on the screen
@@ -126,6 +127,8 @@ class Micro extends Model
 		let left_salt =0;
 		let right_water =0;
 		let right_salt=0;
+		let left_vel=0;
+		let right_vel =0;
 		for (const p of this.particles)
 		{
 			if (p.posX<width/2)
@@ -136,6 +139,7 @@ class Micro extends Model
 					case 'w': left_water++;break;
 					case 's': left_salt++;break;
 				}
+				left_vel+= sqrt(pow(p.velX, 2)+ pow(p.velY,2));
 			}
 			else
 			{
@@ -144,16 +148,20 @@ class Micro extends Model
 					case 'w': right_water++;break;
 					case 's': right_salt++;break;
 				}
+				right_vel+= sqrt(pow(p.velX, 2)+ pow(p.velY,2));
 			}
 		}
 		// draw number of particles on either side
 		fill('blue');
 		textSize(40);
-		text(left_water, width/4,50);
-		text(right_water, 3*width/4,50);
+		text(left_water, width/4,50);			text(right_water, 3*width/4,50);
+		
 		fill('red');
-		text(left_salt, width/4,100);
-		text(right_salt, 3*width/4,100);
+		text(left_salt, width/4,100);			text(right_salt, 3*width/4,100);
+		
+		fill('black');
+		text('Average Speed', width/4 -400, 50);		text('Average Speed', 3*width/4 -400, 50);
+		text(round(left_vel/(left_salt+left_water), 0), width/4-200,100 );		text(round(right_vel/(right_salt+right_water),0), 3*width/4-200,100 );
 	}
 	
 	
@@ -164,8 +172,19 @@ class Micro extends Model
 		
 		if (!this.paused)
 		{
+		    for (const a of this.particles)
+			{
+				for (const b of this.particles)
+				{
+					if (a != b)
+					{
+						a.apply_forces(b);
+					}
+				}
+			}
 			// Perform collisions between each particle
 			// Big O Complexity of n^2
+			// better data structures could be used to make this faster
 			for (const a of this.particles)
 			{
 				for (const b of this.particles)
@@ -192,6 +211,7 @@ class Micro extends Model
 		{
 			this.particles.pop();
 		}
+		//*this = Model(this.type);
 		
 	}
 	
@@ -240,6 +260,7 @@ function reset_membrane()
 		10,
 	);
 }
+
 
 // For these it is required as models need to be loaded from outside the model, at least in this paradigm.
 
