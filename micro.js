@@ -60,7 +60,7 @@ class Micro extends Model
 				this.control.addSlider('salt_left_slider','Salt Number Left', 0,40,0,100,height-100);
 				
 				
-				this.control.addSlider('attractive_force','Attractive Force', 0,1000000,1500,100,height-50);
+				this.control.addSlider('attractive_force','Attractive Force', 0,5000,1500,100,height-50);
 				
 				break;
 			case 'default':
