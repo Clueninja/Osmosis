@@ -60,7 +60,7 @@ class Micro extends Model
 				this.control.addSlider('salt_left_slider','Salt Number Left', 0,40,0,100,height-100);
 				
 				
-				this.control.addSlider('attractive_force','Attractive Force', 0,10000,1500,100,height-50);
+				this.control.addSlider('attractive_force','Attractive Force', 0,1000000,1500,100,height-50);
 				
 				break;
 			case 'default':
@@ -172,6 +172,16 @@ class Micro extends Model
 		
 		if (!this.paused)
 		{
+		    for (const a of this.particles)
+			{
+				for (const b of this.particles)
+				{
+					if (a != b)
+					{
+						a.apply_forces(b);
+					}
+				}
+			}
 			// Perform collisions between each particle
 			// Big O Complexity of n^2
 			// better data structures could be used to make this faster

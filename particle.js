@@ -14,6 +14,8 @@ class Particle
 		this.posY=posY;
 		this.velX=0;
 		this.velY=0;
+		this.forceX =0;
+		this.forceY=0;
 		this.type='p';
 	}
 	// to be overwritten by inherited particles
@@ -126,6 +128,11 @@ class Particle
 	
 	update()
 	{
+	    this.velX+=this.forceX;
+		this.velY+=this.forceY;
+		this.forceX=0;
+		this.forceY=0;
+		
 		// checks if the particle's position next frame will be out of bounds
 		if (this.posX + this.velX*deltaTime/100< this.mass())
 			this.velX *= -1;
@@ -157,7 +164,19 @@ class Particle
 		
 		this.posX += this.velX*deltaTime/100;
 		this.posY += this.velY*deltaTime/100;
+		
 	}
+	
+	apply_forces(other)
+	{
+		let dis_sqrd = pow(this.posX-other.posX,2)+pow(this.posY-other.posY,2);
+	    let multiplier = attractive_constant * (other.charge() * this.charge())/dis_sqrd;
+        let nX = (other.posX-this.posX)/sqrt(dis_sqrd);
+        let nY = (other.posY-this.posY)/sqrt(dis_sqrd);
+        this.forceX -= nX * multiplier / this.mass();
+        this.forceY -= nY * multiplier / this.mass();
+	}
+	
 	// particle collide with particle
 	// membrane.collide handles collisions between particles and membranes
 	
@@ -203,16 +222,7 @@ class Particle
 				other.posY = distance_to_be_moved * (otherposY-thisposY)/sqrt(dis_sqrd)+otherposY;
 			}
 		}
-		else{
-	        let multiplier = attractive_constant * (other.charge() * this.charge())/dis_sqrd;
-	        let nX = (other.posX-this.posX)/sqrt(dis_sqrd);
-	        let nY = (other.posY-this.posY)/sqrt(dis_sqrd);
-	        this.velX -= nX * multiplier / this.mass();
-	        this.velY -= nY * multiplier / this.mass();
-	        
-	        other.velX += nX * multiplier / other.mass();
-	        other.velY += nY * multiplier / other.mass();
-		}
+		
 		
 	}
 }
@@ -221,7 +231,7 @@ class Particle
 class Water extends Particle
 {
 	static sMass=5;
-	static sCharge=-1/2;
+	static sCharge=-1;
 	constructor(posX,posY)
 	{
 		super(posX,posY);
@@ -240,7 +250,7 @@ class Water extends Particle
 class Salt extends Particle
 {
 	static sMass=30;
-	static sCharge = 1;
+	static sCharge = 6;
 	constructor(posX,posY)
 	{
 		super(posX,posY);
