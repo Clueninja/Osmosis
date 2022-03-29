@@ -125,14 +125,15 @@ class Particle
 		    text(round(pow(pow(this.velX,2)+pow(this.velY,2), 1/2), 2), this.posX, this.posY);
 	    }
 	}
-	
-	update()
+	update_force()
 	{
 	    this.velX+=this.forceX;
 		this.velY+=this.forceY;
 		this.forceX=0;
 		this.forceY=0;
-		
+	}
+	update()
+	{
 		// checks if the particle's position next frame will be out of bounds
 		if (this.posX + this.velX*deltaTime/100< this.mass())
 			this.velX *= -1;

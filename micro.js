@@ -181,6 +181,7 @@ class Micro extends Model
 						a.apply_forces(b);
 					}
 				}
+				a.update_force();
 			}
 			// Perform collisions between each particle
 			// Big O Complexity of n^2
