@@ -181,7 +181,10 @@ class Micro extends Model
 						a.apply_forces(b);
 					}
 				}
-				a.update_force();
+			}
+			for (const a of this.particles)
+			{
+			    a.update_force();
 			}
 			// Perform collisions between each particle
 			// Big O Complexity of n^2
@@ -199,8 +202,12 @@ class Micro extends Model
 				this.membrane.collide(a);
 				
 				// Update particle's position
-				a.update();
+				
 			}
+			for (const a of this.particles)
+			{
+			    a.update();
+		    }
 		}
 	}
 	// Reset the model
