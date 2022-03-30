@@ -170,14 +170,26 @@ class Particle
 	
 	apply_forces(other)
 	{
-		let dis_sqrd = pow(this.posX-other.posX,2)+pow(this.posY-other.posY,2);
-	    let multiplier = attractive_constant * (other.charge() * this.charge())/dis_sqrd;
-        let nX = (other.posX-this.posX)/sqrt(dis_sqrd);
-        let nY = (other.posY-this.posY)/sqrt(dis_sqrd);
-        this.forceX -= nX * multiplier / this.mass();
-        this.forceY -= nY * multiplier / this.mass();
+	    if (! this.is_colliding(other))
+	    {
+		    let dis_sqrd = pow(this.posX-other.posX,2)+pow(this.posY-other.posY,2);
+	        let multiplier = attractive_constant * (other.charge() * this.charge())/dis_sqrd;
+            let nX = (other.posX-this.posX)/sqrt(dis_sqrd);
+            let nY = (other.posY-this.posY)/sqrt(dis_sqrd);
+            this.forceX -= nX * multiplier / this.mass();
+            this.forceY -= nY * multiplier / this.mass();
+        }
 	}
 	
+	
+	is_going_to_collide(other)
+	{
+	    return pow(this.posX+this.velX*deltaTime/100 - other.posX-other.velX*deltaTime/100,2) + pow(this.posY+this.velX*deltaTime/100-other.posY-other.velY*deltaTime/100,2) < pow(this.mass()+other.mass(),2);
+	}
+	is_colliding(other)
+	{
+	     return pow(this.posX-other.posX,2)+pow(this.posY-other.posY,2) < pow(this.mass()+other.mass(),2);
+	}
 	// particle collide with particle
 	// membrane.collide handles collisions between particles and membranes
 	
@@ -188,7 +200,7 @@ class Particle
 		
 		// if next frame, the particles are colliding
 		// minimal computation if the particles are not colliding
-		if ( pow(this.posX+this.velX*deltaTime/100 - other.posX-other.velX*deltaTime/100,2) + pow(this.posY+this.velX*deltaTime/100-other.posY-other.velY*deltaTime/100,2) < pow(this.mass()+other.mass(),2))
+		if ( this.is_going_to_collide(other))
 		{
 			
 			let mag_vel = sqrt(pow(this.velX,2)+pow(this.velY,2));
@@ -208,7 +220,7 @@ class Particle
 
 			// I dont need to calculate new positions if the particles aren't intersecting
 			// If the particles are intersecting (they spawned colliding), then move the particles away from each other
-			if ( pow(this.posX-other.posX,2)+pow(this.posY-other.posY,2) < pow(this.mass()+other.mass(),2))
+			if (this.is_colliding(other))
 			{
 				// sort out position stuff
 				// find distance one particle has to be moved
